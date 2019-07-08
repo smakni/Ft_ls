@@ -1,3 +1,4 @@
 *.o
 ft_ls
 libft/*.a
+libft/obj/*.o
