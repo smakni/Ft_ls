@@ -22,19 +22,19 @@ void	balayer_rep(char *rep, void (*fcn)(char *))
 
 	if ((fdr = opendir(rep)) == NULL)
 	{
-		fprintf(stderr, "balayer_rep : impossibe d'ouvrir %s\n", rep);
+		ft_printf("balayer_rep : impossibe d'ouvrir %s\n", rep);
 		return ;
 	}
 	while ((pr = readdir(fdr))  != NULL)
 	{
-		if (strcmp(pr->d_name, "..") == 0
-			|| strcmp(pr->d_name, ".") == 0)
+		if (ft_strcmp(pr->d_name, "..") == 0
+			|| ft_strcmp(pr->d_name, ".") == 0)
 			continue;
-		if (strlen(rep) + strlen(pr->d_name) + 2 > sizeof(nom))
-			printf("balayer_rep : nom %s %s trop long\n", rep, pr->d_name);
+		if (ft_strlen(rep) + ft_strlen(pr->d_name) + 2 > sizeof(nom))
+			ft_printf("balayer_rep : nom %s %s trop long\n", rep, pr->d_name);
 		else
 		{
-			sprintf(nom, "%s/%s", rep, pr->d_name);
+			ft_sprintf(nom, "%s/%s", rep, pr->d_name);
 			(*fcn)(nom);
 		}
 	}
@@ -47,12 +47,12 @@ void	taillef(char *nom)
 
 	if ((stat(nom, &sttamp)) == -1)
 	{
-		fprintf(stderr, "tailled : acces impossible a %s\n", nom);
+		ft_printf("tailled : acces impossible a %s\n", nom);
 		return ;
 	}
 	if (__S_ISTYPE(sttamp.st_mode, __S_IFDIR))
 		balayer_rep(nom, taillef);
-	printf("%8ld %s\n", sttamp.st_size, nom);
+	ft_printf("%8ld %s\n", sttamp.st_size, nom);
 }
 
 int		main(int ac, char **av)

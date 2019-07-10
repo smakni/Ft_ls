@@ -134,6 +134,7 @@ SRC_NAME		=	ft_putchar.c \
 
 SRC_NAME_P		=	ft_printf.c \
 					ft_dprintf.c \
+					ft_sprintf.c \
 					ft_aux.c \
 					check.c \
 					check_2.c \
@@ -182,14 +183,14 @@ $(OBJ_PATH_P)/%.o: $(SRC_PATH_P)/%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 clean:
-	rm -fv $(OBJ) $(OBJ_P) 
+	rm -fv $(OBJ) $(OBJ_P)
 	rmdir $(OBJ_PATH) 2> /dev/null || true
 	rmdir $(OBJ_PATH_P) 2> /dev/null || true
 
 fclean: clean
 	rm -fv $(NAME)
 
-re: 
+re:
 	make fclean
 	make
 

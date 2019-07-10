@@ -53,6 +53,7 @@ typedef	struct	s_control
 
 int				ft_printf(const char *format, ...);
 int				ft_dprintf(int fd, const char *format, ...);
+int				ft_sprintf(char *dst, const char *format, ...);
 void			ft_analyse(t_format *arg);
 char			check_conv(const char *str, int x);
 char			*check_option(char *str);
