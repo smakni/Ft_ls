@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"ft_ls.h": "c",
-		"stat.h": "c"
+		"stat.h": "c",
+		"dir.h": "c",
+		"dirent.h": "c"
 	}
 }

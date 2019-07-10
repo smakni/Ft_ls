@@ -3,56 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/08 18:40:09 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/10 02:17:12 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-int		get_dir_info(t_env *env, char *dir_path)
+#define MAX_NOM 1024
+
+void	balayer_rep(char *rep, void (*fcn)(char *))
 {
-    env->dir[env->nb_dir] = opendir(dir_path);
-	if (env->dir[env->nb_dir] == NULL)
-		return (ERROR);
-	return (0);
+	char			nom[MAX_NOM];
+	struct dirent	*pr;
+	DIR				*fdr;
+
+	if ((fdr = opendir(rep)) == NULL)
+	{
+		fprintf(stderr, "balayer_rep : impossibe d'ouvrir %s\n", rep);
+		return ;
+	}
+	while ((pr = readdir(fdr))  != NULL)
+	{
+		if (strcmp(pr->d_name, "..") == 0
+			|| strcmp(pr->d_name, ".") == 0)
+			continue;
+		if (strlen(rep) + strlen(pr->d_name) + 2 > sizeof(nom))
+			printf("balayer_rep : nom %s %s trop long\n", rep, pr->d_name);
+		else
+		{
+			sprintf(nom, "%s/%s", rep, pr->d_name);
+			(*fcn)(nom);
+		}
+	}
+	closedir(fdr);
 }
 
-int		lst_repo(t_env *env, int index)
+void	taillef(char *nom)
 {
-	struct dirent	*dp;
+	struct	stat	sttamp;
 
-	while ((dp = readdir(env->dir[index])) != 0)
-    {	
-		if (dp->d_name[0] != '.')
-		{
-			ft_printf("name : %s | type : %d | nb_reclen = %u\n", dp->d_name, dp->d_type, dp->d_reclen);
-		}
-		if (dp->d_type == DT_DIR)
-		{
-			env->nb_dir++;
-			get_dir_info(env, dp->d_name);
-		}
-    }
-	closedir(env->dir[index]);
-	return (0);
+	if ((stat(nom, &sttamp)) == -1)
+	{
+		fprintf(stderr, "tailled : acces impossible a %s\n", nom);
+		return ;
+	}
+	if (__S_ISTYPE(sttamp.st_mode, __S_IFDIR))
+		balayer_rep(nom, taillef);
+	printf("%8ld %s\n", sttamp.st_size, nom);
 }
 
 int		main(int ac, char **av)
 {
-	t_env env;
-	// int i = 0;
-
-	if (ac > 1)
-	{
-		ft_bzero(&env, sizeof(t_env));
-		get_dir_info(&env, av[1]);
-		lst_repo(&env, 0);
-		ft_printf("nb_dir_in : %d\n", env.nb_dir);
-		// while (i < env.nb_dir)
-		  	// ft_printf("saved_dir = %s\n", env->dir[i])
-	}
+	if (ac == 1)
+		taillef(".");
+	else
+		while(--ac > 0)
+			taillef(*++av);
     return (0);
 }
