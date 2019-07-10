@@ -14,34 +14,36 @@
 
 #define MAX_NOM 1024
 
-void	balayer_rep(char *rep, void (*fcn)(char *))
+void	lst_dir(char *rep, void (*fcn)(char *))
 {
 	char			nom[MAX_NOM];
 	struct dirent	*pr;
 	DIR				*fdr;
+	int				opt = 1;
 
 	if ((fdr = opendir(rep)) == NULL)
 	{
 		ft_printf("balayer_rep : impossibe d'ouvrir %s\n", rep);
 		return ;
 	}
-	while ((pr = readdir(fdr))  != NULL)
+	while ((pr = readdir(fdr)) != NULL)
 	{
 		if (ft_strcmp(pr->d_name, "..") == 0
 			|| ft_strcmp(pr->d_name, ".") == 0)
 			continue;
 		if (ft_strlen(rep) + ft_strlen(pr->d_name) + 2 > sizeof(nom))
 			ft_printf("balayer_rep : nom %s %s trop long\n", rep, pr->d_name);
-		else
+		else if (opt == 1)
 		{
+			ft_printf("%s\n", pr->d_name);
 			ft_sprintf(nom, "%s/%s", rep, pr->d_name);
-			(*fcn)(nom);
+		 	(*fcn)(nom);
 		}
 	}
 	closedir(fdr);
 }
 
-void	taillef(char *nom)
+void	get_info(char *nom)
 {
 	struct	stat	sttamp;
 
@@ -51,16 +53,18 @@ void	taillef(char *nom)
 		return ;
 	}
 	if (__S_ISTYPE(sttamp.st_mode, __S_IFDIR))
-		balayer_rep(nom, taillef);
-	ft_printf("%8ld %s\n", sttamp.st_size, nom);
+	{
+		ft_printf(">>>%s:\n", nom);
+		lst_dir(nom, get_info);
+	}
 }
 
 int		main(int ac, char **av)
 {
 	if (ac == 1)
-		taillef(".");
+		get_info(".");
 	else
 		while(--ac > 0)
-			taillef(*++av);
+			get_info(*++av);
     return (0);
 }
