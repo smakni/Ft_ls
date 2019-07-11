@@ -6,7 +6,7 @@
 #    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/08 16:06:51 by smakni           ###   ########.fr        #
+#    Updated: 2019/07/11 18:01:40 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ LDFLAGS		=	-L libft
 
 LDLIBS		=	-lft
 
-SRC_NAME	=	main.c 
+SRC_NAME	=	main.c\
+				option.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
