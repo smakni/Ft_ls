@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/11 18:14:59 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/12 15:35:01 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,27 @@
 # define T 	16
 # define ALL (FLAG1 | FLAG2 | FLAG3)
 
-// typedef	struct s_f_info
-// {
-// 	char		type;
-// 	char		perm[PERMISSION_LENGHT];
-// 	nlink_t		n_links;
-// 	char		o_name[MAX_PATH];
-// 	char		o_group[MAX_PATH];
-// 	off_t		size;
-// 	char		tolm[MAX_TIME_LENGHT];
-// 	char		name[MAX_PATH];
-// }				t_f_info;
+# define CAPACITY 1024
 
-// typedef	struct	s_env
-// {
-// 	char 		opt;
-// 	t_f_info	f_info;
+typedef	struct	s_data
+{
+	time_t		time;
+	char		*f_name;
+	char		output[4096];
 
-// }				t_env;
+}				t_data;
+
+typedef	struct	s_env
+{
+	t_data		*data;
+	char 		*path[4096];
+	int			nb_files;
+	int			capacity;
+	char 		opt;
+
+}				t_env;
 
 void	option(char *av, char *opt);
+int		ft_realloc_tab(t_env *env);
 
 #endif

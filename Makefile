@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
+#    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/11 18:01:40 by smakni           ###   ########.fr        #
+#    Updated: 2019/07/12 13:08:47 by sabri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ LDFLAGS		=	-L libft
 LDLIBS		=	-lft
 
 SRC_NAME	=	main.c\
-				option.c
+				option.c\
+				ft_realloc_tab.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
