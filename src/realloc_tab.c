@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc_tab.c                                   :+:      :+:    :+:   */
+/*   realloc_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 11:06:57 by sabri             #+#    #+#             */
-/*   Updated: 2019/07/12 14:41:23 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/15 13:03:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-int	ft_realloc_tab(t_env *env)
+int	realloc_tab(t_env *env)
 {
 	t_data			*tmp;
 	int				i;

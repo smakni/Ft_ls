@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/12 16:16:52 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/15 16:45:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,53 +35,56 @@ void	print_data(t_env *env)
 	int i;
 
 	i = 0;
-	//ft_printf("nb = %d\n", env->nb_files);
-	while (i < env->nb_files) 
+	if (env->opt & T)
+		swap_data(env);
+	while (i < env->nb_files)
 	{
 		// ft_printf("time = %ld\n", env->data[i]->time);
 		ft_printf("%s", env->data[i++].output);
+
 	}
-	//free(env->data);
 	env->nb_files = 0;
 }
 
+void	save_output(t_env *env, struct passwd *uid, struct group *gid, struct stat *buf, char *time)
+{
+	int ret;
+
+	ret = 0;
+	if (env->opt & L)
+	{
+		ret = ft_sprintf(&env->data[env->nb_files].output[ret], "[type-permissions] ");
+		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%2d ", buf->st_nlink);
+		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ", uid->pw_name);
+		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ", gid->gr_name);
+		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%6u ", buf->st_size);
+		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%.12s ", &time[4]);
+	}
+	ft_sprintf(&env->data[env->nb_files].output[ret], "%s\n", env->data[env->nb_files].f_name);
+
+}
 void	save_data(t_env *env, char *path, char *file_name)
 {
 	struct stat 	buf;
 	struct passwd 	*uid;
 	struct group	*gid;
 	char 			*time;
-	int				ret;
 
-	ret = 0;
 	if (env->nb_files >= env->capacity)
-	{
-		if (ft_realloc_tab(env) == -1)
-		{
+		if (realloc_tab(env) == -1)
 			exit (-1);
-		}
-	}
 	if ((stat(path, &buf)) == -1)
 	{
 		ft_printf("print_stat : acces impossible a %s\n", path);
 		return ;
 	}
-	if (env->opt & L)
-	{
-		env->data[env->nb_files].time = buf.st_mtime;
-		time = ctime((time_t *)&buf.st_mtime);
-		uid = getpwuid(buf.st_uid);
-		gid = getgrgid(uid->pw_gid);
-		ret = ft_sprintf(&env->data[env->nb_files].output[ret], "[type-permissions] ");
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%2d ", buf.st_nlink);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ", uid->pw_name);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ", gid->gr_name);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%6u ", buf.st_size);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%.12s ", &time[4]);
-	}
-	ft_sprintf(&env->data[env->nb_files].output[ret], "%s\n", file_name);
+	env->data[env->nb_files].f_name = file_name;
+	env->data[env->nb_files].time = buf.st_mtime;
+	time = ctime((time_t *)&buf.st_mtime);
+	uid = getpwuid(buf.st_uid);
+	gid = getgrgid(uid->pw_gid);
+	save_output(env, uid, gid, &buf, time);
 	env->nb_files++;
-	// print_data(env);
 }
 
 void	lst_dir(t_env *env, char *dir_name, void (*get_info)(char *, t_env *))
@@ -117,7 +120,8 @@ void	lst_dir(t_env *env, char *dir_name, void (*get_info)(char *, t_env *))
 			(*get_info)(path, env);
 		}
 
-	}if (env->data != NULL)
+	}
+	print_data(env);
 	closedir(dir);
 }
 
@@ -132,10 +136,10 @@ void	get_info(char *path,t_env *env)
 	}
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
-		ft_printf("\n>>>>enter[%s]\n\n", path);
+		ft_printf(">%s\n", path);
 		lst_dir(env, path, get_info);
-		print_data(env);
-		ft_printf("\n>>>>>out\n\n");
+		//print_data(env);
+		ft_printf(">|\n");
 	}
 }
 

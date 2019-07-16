@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/12 15:35:01 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/15 13:03:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef	struct	s_env
 }				t_env;
 
 void	option(char *av, char *opt);
-int		ft_realloc_tab(t_env *env);
+int		realloc_tab(t_env *env);
+void	swap_data(t_env *env);
 
 #endif

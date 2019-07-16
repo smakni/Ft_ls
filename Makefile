@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/12 13:08:47 by sabri            ###   ########.fr        #
+#    Updated: 2019/07/15 13:03:34 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CFLAGS		+=	-Wall -Werror -Wextra -g3
 CPPFLAGS	=	-I includes -I libft/includes
 
 HEADER		=	./includes/ft_ls.h
-				
+
 SRC_PATH	=	src
 
 OBJ_PATH	=	obj
@@ -30,7 +30,8 @@ LDLIBS		=	-lft
 
 SRC_NAME	=	main.c\
 				option.c\
-				ft_realloc_tab.c
+				realloc_tab.c\
+				swap_data.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
@@ -48,11 +49,11 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-sanitize: 
+sanitize:
 		make -C libft
 		$(CC) -fsanitize=address -g3  -o fl_ls $(OBJ) $(LDFLAGS) $(LDLIBS)
 
-resanitize: fclean $(OBJ) 
+resanitize: fclean $(OBJ)
 		make -C libft
 		$(CC) -fsanitize=address -g3  -o ft_ls $(OBJ) $(LDFLAGS) $(LDLIBS)
 
