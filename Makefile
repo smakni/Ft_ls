@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/15 13:03:34 by marvin           ###   ########.fr        #
+#    Updated: 2019/07/16 15:39:36 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ LDLIBS		=	-lft
 SRC_NAME	=	main.c\
 				option.c\
 				realloc_tab.c\
-				swap_data.c
+				swap_data.c\
+				save_data.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 

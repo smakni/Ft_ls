@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/15 13:03:50 by marvin           ###   ########.fr       */
+/*   Updated: 2019/07/16 15:39:22 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef	struct	s_data
 {
 	time_t		time;
 	char		*f_name;
+	char		*mod;
 	char		output[4096];
 
 }				t_data;
@@ -54,5 +55,6 @@ typedef	struct	s_env
 void	option(char *av, char *opt);
 int		realloc_tab(t_env *env);
 void	swap_data(t_env *env);
+void	save_data(t_env *env, char *path, char *file_name);
 
 #endif

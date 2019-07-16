@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/15 16:45:04 by marvin           ###   ########.fr       */
+/*   Updated: 2019/07/16 15:48:59 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-
-// int getChmod(const char *path){
-//     struct stat ret;
-//{
-//     if (stat(path, &ret) == -1) {
-//         return -1;
-//  	}
-//     return (ret.st_mode & S_IRUSR)|(ret.st_mode & S_IWUSR)|(ret.st_mode & S_IXUSR)|/*owner*/
-//         (ret.st_mode & S_IRGRP)|(ret.st_mode & S_IWGRP)|(ret.st_mode & S_IXGRP)|/*group*/
-//         (ret.st_mode & S_IROTH)|(ret.st_mode & S_IWOTH)|(ret.st_mode & S_IXOTH);/*other*/
-// }
-
-// stocker directement avec le bon index(orde definis par si option -t ou pas)
-
-// int		crs(char)
-// {
-// 	if (env->data[])
-// }
 
 void	print_data(t_env *env)
 {
@@ -37,54 +19,24 @@ void	print_data(t_env *env)
 	i = 0;
 	if (env->opt & T)
 		swap_data(env);
-	while (i < env->nb_files)
+	if (env->opt & SR)
 	{
-		// ft_printf("time = %ld\n", env->data[i]->time);
-		ft_printf("%s", env->data[i++].output);
-
+		i = env->nb_files - 1;
+		while (i >= 0)
+		{
+			// ft_printf("time = %ld\n", env->data[i]->time);
+			ft_printf("%s", env->data[i--].output);
+		}
+	}
+	else
+	{
+		while (i < env->nb_files)
+		{
+			// ft_printf("time = %ld\n", env->data[i]->time);
+			ft_printf("%s", env->data[i++].output);
+		}
 	}
 	env->nb_files = 0;
-}
-
-void	save_output(t_env *env, struct passwd *uid, struct group *gid, struct stat *buf, char *time)
-{
-	int ret;
-
-	ret = 0;
-	if (env->opt & L)
-	{
-		ret = ft_sprintf(&env->data[env->nb_files].output[ret], "[type-permissions] ");
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%2d ", buf->st_nlink);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ", uid->pw_name);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ", gid->gr_name);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%6u ", buf->st_size);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%.12s ", &time[4]);
-	}
-	ft_sprintf(&env->data[env->nb_files].output[ret], "%s\n", env->data[env->nb_files].f_name);
-
-}
-void	save_data(t_env *env, char *path, char *file_name)
-{
-	struct stat 	buf;
-	struct passwd 	*uid;
-	struct group	*gid;
-	char 			*time;
-
-	if (env->nb_files >= env->capacity)
-		if (realloc_tab(env) == -1)
-			exit (-1);
-	if ((stat(path, &buf)) == -1)
-	{
-		ft_printf("print_stat : acces impossible a %s\n", path);
-		return ;
-	}
-	env->data[env->nb_files].f_name = file_name;
-	env->data[env->nb_files].time = buf.st_mtime;
-	time = ctime((time_t *)&buf.st_mtime);
-	uid = getpwuid(buf.st_uid);
-	gid = getgrgid(uid->pw_gid);
-	save_output(env, uid, gid, &buf, time);
-	env->nb_files++;
 }
 
 void	lst_dir(t_env *env, char *dir_name, void (*get_info)(char *, t_env *))
