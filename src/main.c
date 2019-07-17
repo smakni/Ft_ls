@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/16 15:48:59 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:54:35 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,59 +39,102 @@ void	print_data(t_env *env)
 	env->nb_files = 0;
 }
 
-void	lst_dir(t_env *env, char *dir_name, void (*get_info)(char *, t_env *))
+// void	lst_dir_r(t_env *env, char *dir_name, void (*get_info)(char *, t_env *))
+// {
+// 	char			path[1024];
+// 	struct dirent	*dir_ent;
+// 	DIR				*dir;
+
+// 	if ((dir = opendir(dir_name)) == NULL)
+// 	{
+// 		ft_printf("lst_dir_r : impossibe d'ouvrir %s\n", path);
+// 		return ;
+// 	}
+// 	while ((dir_ent = readdir(dir)) != NULL)
+// 	{
+// 		ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
+// 		if (dir_ent->d_name[0] == '.')
+// 		{
+// 			if (env->opt & A)
+// 			{
+// 				if ((env->opt & R)
+// 				&& ft_strcmp(dir_ent->d_name, ".") != 0
+// 				&& ft_strcmp(dir_ent->d_name, "..") != 0)
+// 		 		 	(*get_info)(path, env);
+// 			}
+// 			continue ;
+// 		}
+// 		if (env->opt & R)
+// 			(*get_info)(path, env);
+// 	}
+// 	closedir(dir);
+// }
+
+void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
+{
+	int i;
+
+	// i = 0;
+	// while (i < path_r->nb_path)
+	// {
+	// 	ft_printf("path_list = %s\n", path_r->path[i++]);
+	// }
+	i = 0;
+	while (i < path_r->nb_path)
+	{
+		// ft_printf("path_recu = %s\n", path_r->path[i]);
+		(*get_info)(path_r->path[i], env);
+		i++;
+	}
+}
+
+t_path_r lst_dir(t_env *env, char *dir_name)
 {
 	char			path[1024];
 	struct dirent	*dir_ent;
 	DIR				*dir;
+	t_path_r		path_r;
 
+
+	ft_bzero(&path_r, sizeof(path_r));
 	if ((dir = opendir(dir_name)) == NULL)
 	{
 		ft_printf("lst_dir : impossibe d'ouvrir %s\n", path);
-		return ;
+		exit (0);
 	}
 	while ((dir_ent = readdir(dir)) != NULL)
 	{
-		ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
 		if (dir_ent->d_name[0] == '.')
 		{
 			if (env->opt & A)
-			{
-				save_data(env, path, dir_ent->d_name);
-				if ((env->opt & R)
-				&& ft_strcmp(dir_ent->d_name, ".") != 0
-				&& ft_strcmp(dir_ent->d_name, "..") != 0)
-		 		 	(*get_info)(path, env);
-			}
+				save_data(env, path, dir_ent->d_name, &path_r);
 			continue ;
 		}
-		save_data(env, path, dir_ent->d_name);
-		if (env->opt & R)
-		{
-			print_data(env);
-			(*get_info)(path, env);
-		}
-
+		ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
+		save_data(env, path, dir_ent->d_name, &path_r);
 	}
-	print_data(env);
+	env->i++;
 	closedir(dir);
+	return (path_r);
 }
 
 void	get_info(char *path,t_env *env)
 {
 	struct	stat	buf;
+	t_path_r		path_r;
 
-	// ft_printf("nb_files = %d\n", env->nb_files);
 	if ((stat(path, &buf)) == -1)
 	{
 		ft_printf("get_info : acces impossible a %s\n", path);
 	}
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
-		ft_printf(">%s\n", path);
-		lst_dir(env, path, get_info);
-		//print_data(env);
-		ft_printf(">|\n");
+		ft_printf("%s:\n", path);
+		path_r = lst_dir(env, path);
+		print_data(env);
+		ft_printf("\n");
+		if (env->opt & R)
+			lst_dir_r(env, &path_r, get_info);
 	}
 }
 

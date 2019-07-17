@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/16 15:55:41 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:51:07 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static	void	save_output(t_env *env, struct passwd *uid,
 										env->data[env->nb_files].f_name);
 }
 
-void			save_data(t_env *env, char *path, char *file_name)
+void			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 {
 	struct stat		buf;
 	struct passwd	*uid;
@@ -78,6 +78,8 @@ void			save_data(t_env *env, char *path, char *file_name)
 		ft_printf("print_stat : acces impossible a %s\n", path);
 		return ;
 	}
+	if ((buf.st_mode & S_IFMT) == S_IFDIR)
+		path_r->path[path_r->nb_path++] = ft_strdup(path);
 	env->data[env->nb_files].f_name = file_name;
 	env->data[env->nb_files].time = buf.st_mtime;
 	uid = getpwuid(buf.st_uid);

@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/16 15:39:22 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:49:28 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,25 @@ typedef	struct	s_data
 	time_t		time;
 	char		*f_name;
 	char		*mod;
+	char		*path;
 	char		output[4096];
 
 }				t_data;
 
+typedef	struct	s_path_r
+{
+	char		*path[CAPACITY];
+	int			nb_path;
+}				t_path_r;
+
+
 typedef	struct	s_env
 {
 	t_data		*data;
-	char 		*path[4096];
+	char 		*path[CAPACITY];
 	int			nb_files;
+	int			nb_dir;
+	int			i;
 	int			capacity;
 	char 		opt;
 
@@ -55,6 +65,6 @@ typedef	struct	s_env
 void	option(char *av, char *opt);
 int		realloc_tab(t_env *env);
 void	swap_data(t_env *env);
-void	save_data(t_env *env, char *path, char *file_name);
+void	save_data(t_env *env, char *path, char *file_name, t_path_r *path_r);
 
 #endif

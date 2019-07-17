@@ -6,7 +6,7 @@
 #    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/16 15:39:36 by smakni           ###   ########.fr        #
+#    Updated: 2019/07/17 16:15:27 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 sanitize:
-		make -C libft
 		$(CC) -fsanitize=address -g3  -o fl_ls $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 resanitize: fclean $(OBJ)
