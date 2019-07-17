@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/17 18:16:09 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/17 18:27:08 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	i = 0;
 	if (env->opt & T)
 		swap_dir(path_r);
-	while (i < path_r->nb_path)
+	if (env->opt & SR)
 	{
-		// ft_printf("path_recu = %s\n", path_r->path[i]);
-		(*get_info)(path_r->path_lst[i].path, env);
-		i++;
+		i = path_r->nb_path - 1;
+		while (i >= 0)
+			(*get_info)(path_r->path_lst[i--].path, env);
+	}
+	else
+	{
+		while (i < path_r->nb_path)
+		(*get_info)(path_r->path_lst[i++].path, env);
 	}
 }
 
