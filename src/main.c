@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/17 18:27:08 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/18 18:52:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 {
 	int i;
 
-	// i = 0;
-	// while (i < path_r->nb_path)
-	// {
-	// 	ft_printf("path_list = %s\n", path_r->path[i++]);
-	// }
+	i = 0;
+	while (i < path_r->nb_path)
+	{
+		ft_printf("path_list = %s\n", path_r->path_lst[i++]);
+	}
 	i = 0;
 	if (env->opt & T)
 		swap_dir(path_r);
@@ -54,7 +54,7 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	else
 	{
 		while (i < path_r->nb_path)
-		(*get_info)(path_r->path_lst[i++].path, env);
+			(*get_info)(path_r->path_lst[i++].path, env);
 	}
 }
 
@@ -69,18 +69,18 @@ t_path_r lst_dir(t_env *env, char *dir_name)
 	ft_bzero(&path_r, sizeof(path_r));
 	if ((dir = opendir(dir_name)) == NULL)
 	{
-		ft_printf("lst_dir : impossibe d'ouvrir %s\n", path);
-		exit (0);
+		ft_printf("lst_dir : impossibe d'ouvrir %s\n", dir_name);
+		return (path_r);
 	}
 	while ((dir_ent = readdir(dir)) != NULL)
 	{
+		ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
 		if (dir_ent->d_name[0] == '.')
 		{
 			if (env->opt & A)
 				save_data(env, path, dir_ent->d_name, &path_r);
 			continue ;
 		}
-		ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
 		save_data(env, path, dir_ent->d_name, &path_r);
 	}
 	closedir(dir);
@@ -93,9 +93,7 @@ void	get_info(char *path,t_env *env)
 	t_path_r		path_r;
 
 	if ((stat(path, &buf)) == -1)
-	{
 		ft_printf("get_info : acces impossible a %s\n", path);
-	}
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
 		ft_printf("%s:\n", path);

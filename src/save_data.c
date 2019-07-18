@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/17 18:13:10 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/18 18:37:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ void			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 			exit(-1);
 	if ((stat(path, &buf)) == -1)
 	{
-		ft_printf("print_stat : acces impossible a %s\n", path);
+		ft_printf("save_stat : acces impossible a %s\n", file_name);
 		return ;
 	}
-	if ((buf.st_mode & S_IFMT) == S_IFDIR)
+	if ((buf.st_mode & S_IFMT) == S_IFDIR && strcmp(file_name, "..") != 0
+			&& strcmp(file_name, ".") != 0)
 	{
 		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);
 		path_r->path_lst[path_r->nb_path++].time = buf.st_mtime;
