@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/18 17:45:13 by marvin           ###   ########.fr       */
+/*   Updated: 2019/07/19 15:33:38 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef	struct s_path
 
 typedef	struct	s_path_r
 {
-	t_path		path_lst[CAPACITY];
+	t_path		path_lst[4096];
 	int			nb_path;
 }				t_path_r;
 
@@ -64,6 +64,6 @@ void	option(char *av, char *opt);
 int		realloc_tab(t_env *env);
 void	swap_data(t_env *env);
 void	swap_dir(t_path_r *path_r);
-void	save_data(t_env *env, char *path, char *file_name, t_path_r *path_r);
+int		save_data(t_env *env, char *path, char *file_name, t_path_r *path_r);
 
 #endif

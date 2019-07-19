@@ -3,6 +3,7 @@
 		"ft_ls.h": "c",
 		"stat.h": "c",
 		"dir.h": "c",
-		"dirent.h": "c"
+		"dirent.h": "c",
+		"types.h": "c"
 	}
 }

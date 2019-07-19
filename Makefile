@@ -6,7 +6,7 @@
 #    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/17 16:15:27 by smakni           ###   ########.fr        #
+#    Updated: 2019/07/19 15:27:38 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		+=	-Wall -Werror -Wextra -g3
 
-CPPFLAGS	=	-I includes -I libft/includes
+CPPFLAGS	=	-I includes -I libft/includes -I libft/ft_printf/
 
 HEADER		=	./includes/ft_ls.h
 
@@ -24,9 +24,9 @@ SRC_PATH	=	src
 
 OBJ_PATH	=	obj
 
-LDFLAGS		=	-L libft
+LDFLAGS		=	-L libft -L libft/ft_printf/
 
-LDLIBS		=	-lft
+LDLIBS		=	-lft -lftprintf
 
 SRC_NAME	=	main.c\
 				option.c\
@@ -44,6 +44,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
 		make -C libft
+		make -C libft/ft_printf
 		$(CC) $(CFLAGS) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)
@@ -55,6 +56,7 @@ sanitize:
 
 resanitize: fclean $(OBJ)
 		make -C libft
+		make -C libft/ft_printf
 		$(CC) -fsanitize=address -g3  -o ft_ls $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 clean:
@@ -65,6 +67,7 @@ clean:
 fclean: clean
 	rm -fv $(NAME)
 	make fclean -C libft
+	make fclean -C libft/ft_printf
 
 re:
 	make fclean
