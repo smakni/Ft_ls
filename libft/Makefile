@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
+#    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/05 09:14:14 by smakni            #+#    #+#              #
-#    Updated: 2019/07/19 14:50:34 by smakni           ###   ########.fr        #
+#    Updated: 2019/07/19 19:58:29 by sabri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -169,8 +169,8 @@ OBJ_P 			= 	$(addprefix $(OBJ_PATH_P)/,$(OBJ_NAME_P))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-		$(AR) $(NAME) $(OBJ)
+$(NAME): $(OBJ) $(OBJ_P)
+		$(AR) $(NAME) $(OBJ) $(OBJ_P)
 		ranlib $(NAME)
 		@echo "[LIBFT OK]"
 

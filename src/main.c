@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/19 15:32:13 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/24 13:17:33 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	print_data(t_env *env)
 			ft_printf("%s", env->data[i--].output);
 	}
 	else
-	{
 		while (i < env->nb_files)
 			ft_printf("%s", env->data[i++].output);
-	}
 	if (env->opt & R)
 		ft_printf("\n");
 	env->nb_files = 0;
@@ -63,22 +61,20 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	}
 }
 
-t_path_r lst_dir(t_env *env, char *dir_name)
+void	 lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
 {
 	char			path[1024];
 	struct dirent	*dir_ent;
 	DIR				*dir;
-	t_path_r		path_r;
 	int				total;
 
 
-	ft_bzero(path, sizeof(path));
-	ft_bzero(&path_r, sizeof(path_r));
 	total = 0;
+	ft_bzero(path, sizeof(path));
 	if ((dir = opendir(dir_name)) == NULL)
 	{
-		ft_printf("lst_dir : impossibe d'ouvrir %s\n", dir_name);
-		return (path_r);
+		ft_printf("ft_ls: cannot open directory '%s': Permission denied\n", dir_name);
+		return ;
 	}
 	while ((dir_ent = readdir(dir)) != NULL)
 	{
@@ -86,15 +82,15 @@ t_path_r lst_dir(t_env *env, char *dir_name)
 		if (dir_ent->d_name[0] == '.')
 		{
 			if (env->opt & A)
-				total += save_data(env, path, dir_ent->d_name, &path_r);
+				total += save_data(env, path, dir_ent->d_name, path_r);
 			continue ;
 		}
-		total += save_data(env, path, dir_ent->d_name, &path_r);
+		total += save_data(env, path, dir_ent->d_name, path_r);
 	}
 	if (env->opt & L && env->nb_files > 0)
 		ft_printf("total %d\n", total);
 	closedir(dir);
-	return (path_r);
+	return ;
 }
 
 void	get_info(char *path,t_env *env)
@@ -102,11 +98,12 @@ void	get_info(char *path,t_env *env)
 	struct	stat	buf;
 	t_path_r		path_r;
 
+	ft_bzero(&path_r, sizeof(path_r));
 	if ((stat(path, &buf)) == -1)
-		ft_printf("get_info : acces impossible a %s\n", path);
+		ft_printf("ft_ls: cannot open directory '%s': Permission denied", path);
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
-		path_r = lst_dir(env, path);
+		lst_dir(env, path, &path_r);
 		print_data(env);
 		if (env->opt & R)
 			lst_dir_r(env, &path_r, get_info);
