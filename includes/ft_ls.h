@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/19 15:33:38 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/24 18:50:23 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,26 @@
 
 # define CAPACITY 1024
 
+typedef	struct s_width
+{
+	int			perm;
+	int			l;
+	int			un;
+	int			gn;
+	int			s;
+}				t_width;
+
 typedef	struct	s_data
 {
+	char		*link;
+	nlink_t		nb_link;
+	char		*pw_name;
+	char		*gr_name;
+	off_t		st_size;
 	time_t		time;
 	char		*f_name;
 	char		*mod;
+	t_width		width;
 	char		output[4096];
 }				t_data;
 
@@ -54,6 +69,7 @@ typedef	struct	s_path_r
 
 typedef	struct	s_env
 {
+	t_width		max_width;
 	t_data		*data;
 	int			nb_files;
 	int			capacity;
@@ -65,5 +81,6 @@ int		realloc_tab(t_env *env);
 void	swap_data(t_env *env);
 void	swap_dir(t_path_r *path_r);
 int		save_data(t_env *env, char *path, char *file_name, t_path_r *path_r);
+int		save_output(t_env *env);
 
 #endif

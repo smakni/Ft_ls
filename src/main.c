@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/24 13:17:33 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/24 18:49:30 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	 lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
 	}
 	while ((dir_ent = readdir(dir)) != NULL)
 	{
-		ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
+		if (ft_strcmp("/", dir_name) != 0)
+			ft_sprintf(path, "%s/%s", dir_name, dir_ent->d_name);
+		else
+			ft_sprintf(path, "%s%s", dir_name, dir_ent->d_name);
 		if (dir_ent->d_name[0] == '.')
 		{
 			if (env->opt & A)
@@ -89,6 +92,7 @@ void	 lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
 	}
 	if (env->opt & L && env->nb_files > 0)
 		ft_printf("total %d\n", total);
+	save_output(env);
 	closedir(dir);
 	return ;
 }

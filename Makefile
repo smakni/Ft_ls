@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
+#    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/19 19:56:32 by sabri            ###   ########.fr        #
+#    Updated: 2019/07/24 18:50:37 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC_NAME	=	main.c\
 				option.c\
 				realloc_tab.c\
 				swap_data.c\
-				save_data.c
+				save_data.c\
+				save_output.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 

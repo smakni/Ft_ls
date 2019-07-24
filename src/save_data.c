@@ -3,17 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   save_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/23 15:58:38 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/24 19:01:48 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
+static int	check_width_link(nlink_t nb_link)
+{
+	int i;
+
+	i = 0;
+	while (nb_link > 0)
+	{
+		nb_link /= 10;
+		i++;
+	}
+	return (i);
+}
+
+static int	check_width_st_size(off_t st_size)
+{
+	int i;
+
+	i = 0;
+	while (st_size > 0)
+	{
+		st_size /= 10;
+		i++;
+	}
+	return (i);
+}
+
 static void	check_type(t_env *env, struct stat *buf)
 {
+	ft_memset(env->data[env->nb_files].output, ' ', 4092);
 	ft_memset(env->data[env->nb_files].output, '-', 10);
 	if ((buf->st_mode & S_IFMT) == S_IFDIR)
 		env->data[env->nb_files].output[0] = 'd';
@@ -44,29 +71,24 @@ static	int		save_mod(t_env *env, struct stat *buf)
 	return (10);
 }
 
-static	int		save_output(t_env *env, struct passwd *uid,
+static	void	save_info(t_env *env, struct passwd *uid,
 						struct group *gid, struct stat *buf)
 {
-	int			ret;
-	char		*time;
-
-	ret = 0;
-	if (env->opt & L)
+	if (env->opt & L) //remplacer les width avec les max ans t_width
 	{
-		time = ctime((time_t *)&buf->st_mtime);
-		ret = save_mod(env, buf);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%3d ",
-															buf->st_nlink);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ",
-															uid->pw_name);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s ",
-															gid->gr_name);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%6u ",
-															buf->st_size);
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%.12s ",
-															&time[4]);
+		env->data[env->nb_files].nb_link = buf->st_nlink;
+		if ((env->data[env->nb_files].width.l = check_width_link(env->data[env->nb_files].nb_link)) > env->max_width.l)
+			env->max_width.l = env->data[env->nb_files].width.l;
+		env->data[env->nb_files].pw_name = uid->pw_name;
+		if ((env->data[env->nb_files].width.un = ft_strlen(env->data[env->nb_files].pw_name)) > env->max_width.un)
+			env->max_width.un = env->data[env->nb_files].width.un;
+		env->data[env->nb_files].gr_name = gid->gr_name;
+		if ((env->data[env->nb_files].width.gn = ft_strlen(env->data[env->nb_files].gr_name)) > env->max_width.gn)
+			env->max_width.gn = env->data[env->nb_files].width.gn;
+		env->data[env->nb_files].st_size = buf->st_size;
+		if ((env->data[env->nb_files].width.s = check_width_st_size(env->data[env->nb_files].st_size)) > env->max_width.s)
+			env->max_width.s = env->data[env->nb_files].width.s;
 	}
-	return (ret);
 }
 
 int			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
@@ -74,14 +96,13 @@ int			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 	struct stat		buf;
 	struct passwd	*uid;
 	struct group	*gid;
-	int				ret;
 	char			link[1024];
 
 	ft_bzero(&link, sizeof(link));
 	if (env->nb_files >= env->capacity)
 		if (realloc_tab(env) == -1)
 			exit(-1);
-	if (readlink(path, link, sizeof(link)) == -1)
+	if (readlink(path, env->data[env->nb_files].link, sizeof(link)) == -1)
 	{
 		if ((stat(path, &buf)) == -1)
 		{
@@ -110,13 +131,9 @@ int			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 		return (0);
 	if (!(gid = getgrgid(uid->pw_gid)))
 		return (0);
-	ret = save_output(env, uid, gid, &buf);
-	if (env->data[env->nb_files].output[0] == 'l' && (env->opt & L))
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s -> %s\n",
-			env->data[env->nb_files].f_name, link);
-	else
-		ret += ft_sprintf(&env->data[env->nb_files].output[ret], "%s\n",
-										env->data[env->nb_files].f_name);
+	if (env->opt & L)
+		env->max_width.perm = save_mod(env, &buf);
+	save_info(env, uid, gid, &buf);
 	env->nb_files++;
 	return (buf.st_blocks);
 }
