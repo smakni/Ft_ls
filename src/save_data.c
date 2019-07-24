@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/24 19:01:48 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/24 23:11:17 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	check_width_link(nlink_t nb_link)
 		nb_link /= 10;
 		i++;
 	}
+	if (i == 0)
+		return (1);
 	return (i);
 }
 
@@ -35,6 +37,8 @@ static int	check_width_st_size(off_t st_size)
 		st_size /= 10;
 		i++;
 	}
+	if (i == 0)
+		return (1);
 	return (i);
 }
 
