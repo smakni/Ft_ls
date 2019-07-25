@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/25 17:25:11 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/25 16:31:14 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 		i = path_r->nb_path - 1;
 		while (i >= 0)
 		{
-			// if (env->opt & R)
-			// 	ft_printf("\n%s:\n", path_r->path_lst[i].path);
+			if (env->opt & R)
+				ft_printf("\n%s:\n", path_r->path_lst[i].path);
 			(*get_info)(path_r->path_lst[i--].path, env);
 		}
 	}
@@ -51,14 +51,14 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	{
 		while (i < path_r->nb_path)
 		{
-			// if (env->opt & R)
-			// 	ft_printf("\n%s:\n", path_r->path_lst[i].path);
+			if (env->opt & R)
+				ft_printf("\n%s:\n", path_r->path_lst[i].path);
 			(*get_info)(path_r->path_lst[i++].path, env);
 		}
 	}
 }
 
-void	lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
+void	 lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
 {
 	char			path[1024];
 	struct dirent	*dir_ent;
@@ -95,16 +95,6 @@ void	lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
 	return ;
 }
 
-void	print_path(t_env *env, char *path)
-{
-	if (env->cursor > 0)
-		ft_putendl("");
-	if (env->nb_files > 0 && env->cursor > 0)
-		ft_printf("%s:\n", path);
-	else if (env->cursor > 0)
-		ft_printf("%s\n", path);
-}
-
 void	get_info(char *path,t_env *env)
 {
 	struct	stat	buf;
@@ -115,31 +105,61 @@ void	get_info(char *path,t_env *env)
 		ft_printf("ft_ls: %s: No such file or directory\n", path);
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
-		print_path(env, path);
 		lst_dir(env, path, &path_r);
 		print_data(env);
-		env->cursor++;
 		if (env->opt & R)
 			lst_dir_r(env, &path_r, get_info);
 	}
-	else
+}
+
+void		swap_arg(char **dir, int nb_dir)
+{
+	int			i;
+	char		*tmp;
+
+	i = 0;
+	while (i < nb_dir)
 	{
-		save_data(env, path, path, NULL);
-		save_output(env);
-		print_data(env);
-		env->cursor++;
-		env->nb_files = 0;
+		if (i + 1 < nb_dir && ft_strcmp(dir[i], dir[i + 1]) > 0)
+		{
+			tmp = dir[i];
+			dir[i] = dir[i + 1];
+			dir[i + 1] = tmp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+}
+
+
+void	analyse_dir(t_env *env, char **dir)
+{
+	int i;
+
+	i = 0;
+	swap_arg(dir, env->nb_dir);
+	while(i < env->nb_dir)
+	{
+		if ((env->opt & R) == 0)
+			ft_printf("%s:\n", dir[i]);
+		get_info(dir[i], env);
+		i++;
 	}
 }
 
 int		main(int ac, char **av)
 {
-	t_env env;
-	int i;
+	t_env 	env;
+	char	**dir;
+	int 	i;
 
 	i = 1;
+	env.ac = ac;
 	ft_bzero(&env, sizeof(env));
 	env.capacity = CAPACITY;
+	if((dir = ft_memalloc(sizeof(char *) * CAPACITY)) == NULL)
+		return (-1);
 	if((env.data = ft_memalloc(sizeof(t_data) * CAPACITY)) == NULL)
 		return (-1);
 	if (ac == 1)
@@ -152,13 +172,14 @@ int		main(int ac, char **av)
 			{
 				option(av[i], &env.opt);
 				if (i + 1 == ac && i + 1 < 3)
-					get_info(".", &env);
+					dir[env.nb_dir++] = ft_strdup(".");
 			}
 			else
-				get_info(av[i], &env);
+				dir[env.nb_dir++] = ft_strdup(av[i]);
 			i++;
 		}
 	}
+	analyse_dir(&env, dir);
 	free(env.data);
     return (0);
 }

@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_opt.c                                         :+:      :+:    :+:   */
+/*   option.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 18:00:34 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/11 18:00:49 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/25 15:34:52 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-void	option(char *av, char *opt)
+void		option(char *av, char *opt)
 {
-	if (ft_strchr(av, 'R') != 0)
-		*opt |= 1;
-	if (ft_strchr(av, 'l') != 0)
-		*opt |= 2;
-	if (ft_strchr(av, 'a') != 0)
-		*opt |= 4;
-	if (ft_strchr(av, 'r') != 0)
-		*opt |= 8;
-	if (ft_strchr(av, 't') != 0)
-		*opt |= 16;
+	av++;
+	while(*av)
+	{
+		if (*av == 'R')
+			*opt |= 1;
+		else if (*av == 'l')
+			*opt |= 2;
+		else if (*av == 'a')
+			*opt |= 4;
+		else if (*av == 'r')
+			*opt |= 8;
+		else if (*av == 't')
+			*opt |= 16;
+		else
+		{
+			ft_printf("/bin/ls: illegal option -- %c\n", *av);
+			ft_printf("usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
+			exit (1);
+		}
+		av++;
+	}
 }

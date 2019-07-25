@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/24 23:11:17 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/25 17:22:15 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	check_type(t_env *env, struct stat *buf)
 
 static	int		save_mod(t_env *env, struct stat *buf)
 {
+	check_type(env, buf);
 	if (buf->st_mode & S_IRUSR)
 		env->data[env->nb_files].output[1] = 'r';
 	if (buf->st_mode & S_IWUSR)
@@ -78,7 +79,7 @@ static	int		save_mod(t_env *env, struct stat *buf)
 static	void	save_info(t_env *env, struct passwd *uid,
 						struct group *gid, struct stat *buf)
 {
-	if (env->opt & L) //remplacer les width avec les max ans t_width
+	if (env->opt & L)
 	{
 		env->data[env->nb_files].nb_link = buf->st_nlink;
 		if ((env->data[env->nb_files].width.l = check_width_link(env->data[env->nb_files].nb_link)) > env->max_width.l)
@@ -100,13 +101,11 @@ int			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 	struct stat		buf;
 	struct passwd	*uid;
 	struct group	*gid;
-	char			link[1024];
 
-	ft_bzero(&link, sizeof(link));
 	if (env->nb_files >= env->capacity)
 		if (realloc_tab(env) == -1)
 			exit(-1);
-	if (readlink(path, env->data[env->nb_files].link, sizeof(link)) == -1)
+	if (readlink(path, env->data[env->nb_files].link, sizeof(env->data[env->nb_files].link)) == -1)
 	{
 		if ((stat(path, &buf)) == -1)
 		{
@@ -114,16 +113,12 @@ int			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 			return (0);
 		}
 	}
-	else
+	else if ((lstat(path, &buf)) == -1)
 	{
-		if ((lstat(path, &buf)) == -1)
-		{
 			ft_printf("save_stat : acces impossible a %s\n", path);
 			return (0);
-		}
 	}
-	check_type(env, &buf);
-	if ((buf.st_mode & S_IFMT) == S_IFDIR && ft_strcmp(file_name, "..") != 0
+	if ((env->opt & R) && (buf.st_mode & S_IFMT) == S_IFDIR && ft_strcmp(file_name, "..") != 0
 			&& ft_strcmp(file_name, ".") != 0)
 	{
 		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);

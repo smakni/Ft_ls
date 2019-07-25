@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/24 18:50:23 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/25 16:39:51 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef	struct s_width
 
 typedef	struct	s_data
 {
-	char		*link;
+	char		link[4096];
 	nlink_t		nb_link;
 	char		*pw_name;
 	char		*gr_name;
@@ -69,9 +69,13 @@ typedef	struct	s_path_r
 
 typedef	struct	s_env
 {
+	char 		*path;
 	t_width		max_width;
 	t_data		*data;
+	int			ac;
+	int			cursor;
 	int			nb_files;
+	int			nb_dir;
 	int			capacity;
 	char 		opt;
 }				t_env;
