@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/26 16:46:29 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/26 18:00:04 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	print_data(t_env *env)
 	int i;
 
 	i = 0;
+	alphaqsort_data(env->data, 0, env->nb_files - 1);
 	if (env->opt & T)
-		ft_qsort_data(env->data, 0, env->nb_files);
+		ft_qsort_data(env->data, 0, env->nb_files - 1);
 	if (env->opt & SR)
 	{
 		i = env->nb_files - 1;
@@ -35,25 +36,26 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	int i;
 
 	i = 0;
+	alphaqsort_dir(path_r, 0, path_r->nb_path - 1);
 	if (env->opt & T)
-		ft_qsort_dir(path_r, 0, env->nb_files);
+		ft_qsort_dir(path_r, 0, path_r->nb_path - 1);
 	if (env->opt & SR)
 	{
 		i = path_r->nb_path - 1;
 		while (i >= 0)
 		{
-			// if (env->opt & R)
-			// 	ft_printf("\n%s:\n", path_r->path_lst[i].path);
-			(*get_info)(path_r->path_lst[i--].path, env);
+			(*get_info)(path_r->path_lst[i].path, env);
+			free(path_r->path_lst[i].path);
+			i--;
 		}
 	}
 	else
 	{
 		while (i < path_r->nb_path)
 		{
-			// if (env->opt & R)
-			// 	ft_printf("\n%s:\n", path_r->path_lst[i].path);
-			(*get_info)(path_r->path_lst[i++].path, env);
+			(*get_info)(path_r->path_lst[i].path, env);
+			free(path_r->path_lst[i].path);
+			i++;
 		}
 	}
 }

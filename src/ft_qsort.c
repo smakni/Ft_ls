@@ -6,11 +6,44 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 15:15:48 by sabri             #+#    #+#             */
-/*   Updated: 2019/07/26 16:57:57 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/26 22:32:20 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
+
+void	alphaqsort_data(t_data *data, int first, int last)
+{
+	int		i;
+	int		j;
+	int 	pivot;
+	t_data	tmp;
+
+   if (first < last)
+   {
+		pivot = first;
+		i = first;
+		j = last;
+		while(i < j)
+		{
+			while (ft_strcmp(data[i].f_name, data[pivot].f_name) <= 0 && i < last)
+            	i++;
+         	while (ft_strcmp(data[j].f_name, data[pivot].f_name) > 0)
+            	j--;
+			if (i < j) 
+			{
+            	tmp = data[i];
+            	data[i] = data[j];
+            	data[j] = tmp;
+         	}
+      	}
+		tmp = data[pivot];
+    	data[pivot] = data[j];
+      	data[j] = tmp;
+      	alphaqsort_data(data, first, j - 1);
+     	alphaqsort_data(data, j + 1, last);
+   }
+}
 
 void	ft_qsort_data(t_data *data, int first, int last)
 {
@@ -42,6 +75,39 @@ void	ft_qsort_data(t_data *data, int first, int last)
       	data[j] = tmp;
       	ft_qsort_data(data, first, j - 1);
      	ft_qsort_data(data, j + 1, last);
+   }
+}
+
+void	alphaqsort_dir(t_path_r *path_r, int first, int last)
+{
+	int			i;
+	int			j;
+	int 		pivot;
+	t_path	tmp;
+
+   if (first < last)
+   {
+		pivot = first;
+		i = first;
+		j = last;
+		while(i < j)
+		{
+			while (ft_strcmp(path_r->path_lst[i].path, path_r->path_lst[pivot].path) <= 0 && i < last)
+            	i++;
+         	while (ft_strcmp(path_r->path_lst[j].path, path_r->path_lst[pivot].path) > 0)
+            	j--;
+			if (i < j) 
+			{
+            	tmp = path_r->path_lst[i];
+            	path_r->path_lst[i] = path_r->path_lst[j];
+            	path_r->path_lst[j] = tmp;
+         	}
+      	}
+		tmp = path_r->path_lst[pivot];
+    	path_r->path_lst[pivot] = path_r->path_lst[j];
+      	path_r->path_lst[j] = tmp;
+      	alphaqsort_dir(path_r, first, j - 1);
+     	alphaqsort_dir(path_r, j + 1, last);
    }
 }
 
