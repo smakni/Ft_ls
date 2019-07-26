@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/25 17:25:11 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/26 16:46:29 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_data(t_env *env)
 
 	i = 0;
 	if (env->opt & T)
-		swap_data(env);
+		ft_qsort_data(env->data, 0, env->nb_files);
 	if (env->opt & SR)
 	{
 		i = env->nb_files - 1;
@@ -36,7 +36,7 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 
 	i = 0;
 	if (env->opt & T)
-		swap_dir(path_r);
+		ft_qsort_dir(path_r, 0, env->nb_files);
 	if (env->opt & SR)
 	{
 		i = path_r->nb_path - 1;

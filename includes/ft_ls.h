@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/25 16:39:51 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/26 16:46:12 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ void	swap_data(t_env *env);
 void	swap_dir(t_path_r *path_r);
 int		save_data(t_env *env, char *path, char *file_name, t_path_r *path_r);
 int		save_output(t_env *env);
+void	ft_qsort_data(t_data *data, int first, int last);
+void	ft_qsort_dir(t_path_r *path_r, int first, int last);
 
 #endif
