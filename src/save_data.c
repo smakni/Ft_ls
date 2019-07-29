@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/25 17:22:15 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/29 16:25:40 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int			save_data(t_env *env, char *path, char *file_name, t_path_r *path_r)
 		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);
 		path_r->path_lst[path_r->nb_path++].time = buf.st_mtime;
 	}
-	env->data[env->nb_files].f_name = file_name;
+	env->data[env->nb_files].f_name = ft_strdup(file_name);
 	env->data[env->nb_files].time = buf.st_mtime;
 	if (!(uid = getpwuid(buf.st_uid)))
 		return (0);

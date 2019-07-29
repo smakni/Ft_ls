@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/26 17:50:46 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/29 16:25:20 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,8 @@ typedef	struct	s_env
 	char 		*path;
 	t_width		max_width;
 	t_data		*data;
-	int			ac;
 	int			cursor;
 	int			nb_files;
-	int			nb_dir;
 	int			capacity;
 	char 		opt;
 }				t_env;
@@ -86,9 +84,11 @@ void	swap_data(t_env *env);
 void	swap_dir(t_path_r *path_r);
 int		save_data(t_env *env, char *path, char *file_name, t_path_r *path_r);
 int		save_output(t_env *env);
-void	ft_qsort_data(t_data *data, int first, int last);
-void	ft_qsort_dir(t_path_r *path_r, int first, int last);
+void	qsort_data(t_data *data, int first, int last);
+void	qsort_dir(t_path_r *path_r, int first, int last);
 void	alphaqsort_data(t_data *data, int first, int last);
 void	alphaqsort_dir(t_path_r *path_r, int first, int last);
+void	print_path(t_env *env, char *path);
+void	print_data(t_env *env);
 
 #endif

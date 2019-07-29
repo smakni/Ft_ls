@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
+#    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/07/26 16:26:49 by sabri            ###   ########.fr        #
+#    Updated: 2019/07/29 15:39:47 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC_NAME	=	main.c\
 				swap_data.c\
 				save_data.c\
 				save_output.c\
-				ft_qsort.c
+				qsort_functions.c\
+				print_functions.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
@@ -53,10 +54,6 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 sanitize:
-		$(CC) -fsanitize=address -g3  -o fl_ls $(OBJ) $(LDFLAGS) $(LDLIBS)
-
-resanitize: fclean $(OBJ)
-		make -C libft
 		$(CC) -fsanitize=address -g3  -o ft_ls $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 clean:

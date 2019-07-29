@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/26 18:00:04 by sabri            ###   ########.fr       */
+/*   Updated: 2019/07/29 16:00:44 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-
-void	print_data(t_env *env)
-{
-	int i;
-
-	i = 0;
-	alphaqsort_data(env->data, 0, env->nb_files - 1);
-	if (env->opt & T)
-		ft_qsort_data(env->data, 0, env->nb_files - 1);
-	if (env->opt & SR)
-	{
-		i = env->nb_files - 1;
-		while (i >= 0)
-			ft_printf("%s", env->data[i--].output);
-	}
-	else
-		while (i < env->nb_files)
-			ft_printf("%s", env->data[i++].output);
-}
 
 void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 {
@@ -38,7 +19,7 @@ void	lst_dir_r(t_env *env, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	i = 0;
 	alphaqsort_dir(path_r, 0, path_r->nb_path - 1);
 	if (env->opt & T)
-		ft_qsort_dir(path_r, 0, path_r->nb_path - 1);
+		qsort_dir(path_r, 0, path_r->nb_path - 1);
 	if (env->opt & SR)
 	{
 		i = path_r->nb_path - 1;
@@ -97,16 +78,6 @@ void	lst_dir(t_env *env, char *dir_name, t_path_r *path_r)
 	return ;
 }
 
-void	print_path(t_env *env, char *path)
-{
-	if (env->cursor > 0)
-		ft_putendl("");
-	if (env->nb_files > 0 && env->cursor > 0)
-		ft_printf("%s:\n", path);
-	else if (env->cursor > 0)
-		ft_printf("%s\n", path);
-}
-
 void	get_info(char *path,t_env *env)
 {
 	struct	stat	buf;
@@ -115,52 +86,78 @@ void	get_info(char *path,t_env *env)
 	ft_bzero(&path_r, sizeof(path_r));
 	if ((stat(path, &buf)) == -1)
 		ft_printf("ft_ls: %s: No such file or directory\n", path);
-	if ((buf.st_mode & S_IFMT) == S_IFDIR)
-	{
-		print_path(env, path);
-		lst_dir(env, path, &path_r);
-		print_data(env);
-		env->cursor++;
-		if (env->opt & R)
-			lst_dir_r(env, &path_r, get_info);
-	}
 	else
 	{
-		save_data(env, path, path, NULL);
-		save_output(env);
-		print_data(env);
-		env->cursor++;
-		env->nb_files = 0;
+		if ((buf.st_mode & S_IFMT) == S_IFDIR)
+		{
+			print_path(env, path);
+			lst_dir(env, path, &path_r);
+			print_data(env);
+			env->cursor++;
+			if (env->opt & R)
+				lst_dir_r(env, &path_r, get_info);
+		}
+		else
+		{
+			save_data(env, path, path, NULL);
+			save_output(env);
+			print_data(env);
+			env->cursor++;
+			env->nb_files = 0;
+		}
+	}
+}
+
+void	check_arg(t_env *env, t_path_r *arg, int ac, char **av)
+{
+	int i;
+	struct stat buf;
+	
+	i = 1;
+	while(i < ac)
+	{
+		if (av[i][0] == '-')
+			option(av[i], &env->opt);
+		else
+		{
+			if ((stat(av[i], &buf)) == -1)
+				ft_printf("save_stat : acces impossible a %s\n", av[i]);
+			else
+			{
+				arg->path_lst[arg->nb_path].path = ft_strdup(av[i]);
+				arg->path_lst[arg->nb_path++].time = buf.st_mtime;
+			}
+		}
+		i++;
+	}
+	if (env->opt > 0 && arg->nb_path == 0)
+		get_info(".", env);
+	else
+	{
+		i = 0;
+		alphaqsort_dir(arg, 0, arg->nb_path - 1);
+		if (env->opt & T)
+			qsort_dir(arg, 0, arg->nb_path - 1);
+		while(i < arg->nb_path)
+			get_info(arg->path_lst[i++].path, env);
 	}
 }
 
 int		main(int ac, char **av)
 {
-	t_env env;
-	int i;
+	t_env		env;
+	t_path_r	arg;
+	int			i;
 
-	i = 1;
+	i = 0;
 	ft_bzero(&env, sizeof(env));
 	env.capacity = CAPACITY;
-	if((env.data = ft_memalloc(sizeof(t_data) * CAPACITY)) == NULL)
+	if ((env.data = ft_memalloc(sizeof(t_data) * CAPACITY)) == NULL)
 		return (-1);
 	if (ac == 1)
 	 	get_info(".", &env);
 	else
-	{
-		while(i < ac)
-		{
-			if (av[i][0] == '-')
-			{
-				option(av[i], &env.opt);
-				if (i + 1 == ac && i + 1 < 3)
-					get_info(".", &env);
-			}
-			else
-				get_info(av[i], &env);
-			i++;
-		}
-	}
+		check_arg(&env, &arg, ac, av);
 	free(env.data);
     return (0);
 }
