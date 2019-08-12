@@ -3,40 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   print_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 14:40:23 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/29 16:10:50 by smakni           ###   ########.fr       */
+/*   Updated: 2019/08/12 16:19:45 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-void	print_data(t_env *env)
+void	print_data(t_env *e)
 {
 	int i;
 
 	i = 0;
-	alphaqsort_data(env->data, 0, env->nb_files - 1);
-	if (env->opt & T)
-		qsort_data(env->data, 0, env->nb_files - 1);
-	if (env->opt & SR)
+	alphaqsort_data(e->data, 0, e->nb_files - 1);
+	if (e->opt & T)
+		qsort_data(e->data, 0, e->nb_files - 1);
+	if (e->opt & SR)
 	{
-		i = env->nb_files - 1;
+		i = e->nb_files - 1;
 		while (i >= 0)
-			ft_printf("%s", env->data[i--].output);
+		{	
+			ft_printf("%s", e->data[i].output);
+			i--;
+		}
 	}
 	else
-		while (i < env->nb_files)
-			ft_printf("%s", env->data[i++].output);
+		while (i < e->nb_files)
+		{
+			ft_printf("%s", e->data[i].output);
+			i++;
+		}
 }
 
-void	print_path(t_env *env, char *path)
+void	print_path(t_env *e, char *path)
 {
-	if (env->cursor > 0)
+	if (e->cursor > 0)
 		ft_putendl("");
-	if (env->nb_files > 0 && env->cursor > 0)
+	if (e->nb_files > 0 && e->cursor > 0)
 		ft_printf("%s:\n", path);
-	else if (env->cursor > 0)
+	else if (e->cursor > 0)
 		ft_printf("%s\n", path);
 }

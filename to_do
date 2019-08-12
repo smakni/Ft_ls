@@ -1,0 +1,3 @@
+check order in sorting
+better qsort > fix stackoverflow
+leaks in outpu

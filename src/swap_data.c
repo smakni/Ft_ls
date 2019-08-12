@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   swap_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:02:19 by marvin            #+#    #+#             */
-/*   Updated: 2019/07/24 15:49:20 by smakni           ###   ########.fr       */
+/*   Updated: 2019/07/30 02:22:37 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-void		swap_data(t_env *env)
+void		swap_data(t_env *e)
 {
 	int		i;
 	t_data	tmp;
 
 	i = 0;
-	while (i < env->nb_files)
+	while (i < e->nb_files)
 	{
-		if (i + 1 < env->nb_files && env->data[i].time < env->data[i + 1].time)
+		if (i + 1 < e->nb_files && e->data[i].time < e->data[i + 1].time)
 		{
-			tmp = env->data[i];
-			env->data[i] = env->data[i + 1];
-			env->data[i + 1] = tmp;
+			tmp = e->data[i];
+			e->data[i] = e->data[i + 1];
+			e->data[i + 1] = tmp;
 			i = 0;
 		}
 		else
