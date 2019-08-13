@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:02:19 by marvin            #+#    #+#             */
-/*   Updated: 2019/08/13 18:10:17 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/13 19:01:28 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,8 @@ void		swap_data(t_env *e)
 	i = e->nb_files;
 	if (e->opt & T)
 	{
-		while (i - 1 >= 0 && e->data[i].time > e->data[i - 1].time)
+		while (i - 1 >= 0 && e->data[i].time >= e->data[i - 1].time)
 		{
-			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
-			tmp = e->data[i];
-			e->data[i] = e->data[i - 1];
-			e->data[i - 1] = tmp;
-			i--;
-		}
-		while (i - 1 >= 0 && e->data[i].time == e->data[i - 1].time && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) >= 0)
-		{
-			// ft_printf("SWAP_2\n");
 			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
 			tmp = e->data[i];
 			e->data[i] = e->data[i - 1];
@@ -43,7 +34,8 @@ void		swap_data(t_env *e)
 		}
 	}
 	else
-	{	while (i - 1 >= 0 && e->data[i].time == e->data[i - 1].time && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) <= 0)
+	{	
+		while (i - 1 >= 0 && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) < 0)
 		{
 			// ft_printf("SWAP_2\n");
 			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
