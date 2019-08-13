@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/12 16:17:04 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/13 12:20:21 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int			save_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	if (e->opt & L)
 		e->max_width.perm = save_mod(e, &buf);
 	save_info(e, uid, gid, &buf);
+	if (e->opt & T)
+		swap_data(e);
 	e->nb_files++;
 	return (buf.st_blocks);
 }

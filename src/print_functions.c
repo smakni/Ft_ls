@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 14:40:23 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/12 16:19:45 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/13 00:59:57 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	print_data(t_env *e)
 	int i;
 
 	i = 0;
-	alphaqsort_data(e->data, 0, e->nb_files - 1);
-	if (e->opt & T)
-		qsort_data(e->data, 0, e->nb_files - 1);
+	// alphaqsort_data(e->data, 0, e->nb_files - 1);
+	// if (e->opt & T)
+	// 	qsort_data(e->data, 0, e->nb_files - 1);
 	if (e->opt & SR)
 	{
 		i = e->nb_files - 1;
