@@ -1,0 +1,17 @@
+total 176
+-rw-r--r--   1 salom  staff      0 13 aoû 18:06 666
+-rw-r--r--   1 salom  staff   2009 13 aoû 18:12 Makefile
+-rw-r--r--   1 salom  staff      0 13 aoû 18:06 aaa
+-rw-r--r--   1 salom  staff      7 13 aoû 18:06 auteur
+-rw-r--r--   1 salom  staff      0 13 aoû 18:06 bbb
+-rw-r--r--   1 salom  staff      0 13 aoû 18:06 ccc
+-rwxr-xr-x   1 salom  staff  70064 13 aoû 18:18 ft_ls
+drwxr-xr-x   3 salom  staff     96 13 aoû 18:06 includes
+drwxr-xr-x  11 salom  staff    352 13 aoû 18:06 libft
+-rw-r--r--   1 salom  staff      0 13 aoû 18:19 ls-l.debug
+drwxr-xr-x  10 salom  staff    320 13 aoû 18:18 obj
+drwxr-xr-x  10 salom  staff    320 13 aoû 18:18 src
+drwxr-xr-x   5 salom  staff    160 13 aoû 18:06 test
+-rw-r--r--   1 salom  staff      7 13 aoû 18:06 test_hl
+lrwxr-xr-x   1 salom  staff      8 13 aoû 18:06 test_link -> includes
+-rw-r--r--   1 salom  staff     71 13 aoû 18:06 to_do
