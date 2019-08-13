@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:02:19 by marvin            #+#    #+#             */
-/*   Updated: 2019/08/13 12:21:39 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/13 17:36:34 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,32 @@ void		swap_data(t_env *e)
 	int		i;
 	t_data	tmp;
 
+	// i = e->nb_files;
+	// // ft_printf("\nswap for %s\n", e->data[i].f_name);
+	// // while (i > 0)
+	// // 	ft_printf(">>[%s]<<\n", e->data[--i].f_name);
 	i = e->nb_files;
-	ft_printf("swap\n");
-	while (i - 1 >= 0 && e->data[i].time >= e->data[i - 1].time)
+	if (e->opt & T)
 	{
-		ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
+		while (i - 1 >= 0 && e->data[i].time > e->data[i - 1].time)
+		{
+			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
+			tmp = e->data[i];
+			e->data[i] = e->data[i - 1];
+			e->data[i - 1] = tmp;
+			i--;
+		}
+	}
+	while (i - 1 >= 0 && e->data[i].time == e->data[i - 1].time && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) <= 0)
+	{
+		// ft_printf("SWAP_2\n");
+		// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
 		tmp = e->data[i];
 		e->data[i] = e->data[i - 1];
 		e->data[i - 1] = tmp;
 		i--;
 	}
+	
 }
 
 void		swap_dir(t_path_r *path_r)
