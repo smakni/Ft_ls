@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/01 21:20:47 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/16 22:27:18 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,9 @@ void	check_arg(t_env *e, t_path_r *arg, int ac, char **av)
 	else
 	{
 		i = 0;
-		alphaqsort_dir(arg, 0, arg->nb_path - 1);
-		if (e->opt & T)
-			qsort_dir(arg, 0, arg->nb_path - 1);
+		// alphaqsort_dir(arg, 0, arg->nb_path - 1);
+		// if (e->opt & T)
+		// 	qsort_dir(arg, 0, arg->nb_path - 1);
 		while(i < arg->nb_path)
 		{
 			get_info(arg->path_lst[i].path, e);
