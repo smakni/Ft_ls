@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:02:19 by marvin            #+#    #+#             */
-/*   Updated: 2019/08/16 22:31:14 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/17 20:00:54 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void		swap_data(t_env *e)
 			e->data[i - 1] = tmp;
 			i--;
 		}
-		while (e->data[i].time == e->data[i - 1].time && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) >= 0)
+		while (i - 1 >= 0 && e->data[i].time == e->data[i - 1].time && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) > 0)
 		{
-			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
+			// ft_printf("i = %s == i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
 			tmp = e->data[i];
 			e->data[i] = e->data[i - 1];
 			e->data[i - 1] = tmp;

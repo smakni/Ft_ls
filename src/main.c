@@ -6,7 +6,7 @@
 /*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/16 22:27:18 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/17 19:24:06 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r)
 		}
 		total += save_data(e, path, dir_ent->d_name, path_r);
 	}
-	if (e->opt & L && e->nb_files > 0)
+	if (e->opt & L)
 		ft_printf("total %d\n", total);
 	save_output(e);
 	closedir(dir);

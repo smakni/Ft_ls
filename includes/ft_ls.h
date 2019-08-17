@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -26,10 +27,12 @@
 # if __APPLE__
 #    define MAX_FSIZE    1024
 #    define st_mtime    st_mtimespec.tv_sec
+	define	SPE			2
 # elif __linux__
 #    define MAX_FSIZE    256
 #    define S_ISVTX    __S_ISVTX
 #    define S_ISWHT(x)    0
+#	 define	SPE			1
 # endif
 
 # define R 	1

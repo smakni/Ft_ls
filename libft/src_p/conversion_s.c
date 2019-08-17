@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_s.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 15:41:00 by sabri             #+#    #+#             */
-/*   Updated: 2018/12/05 09:57:38 by smakni           ###   ########.fr       */
+/*   Updated: 2019/08/17 18:59:49 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static	char	*conversion_s1(t_format *arg, char *tmp)
 	i = 0;
 	while (tmp[i] && i < arg->precision)
 		i++;
-	tmp = ft_strsub(tmp, 0, i);
+	tmp[i] = '\0';
 	return (tmp);
 }
 
