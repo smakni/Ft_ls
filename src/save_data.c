@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/13 17:52:51 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/20 12:22:37 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ static void	check_type(t_env *e, struct stat *buf)
 		e->data[e->nb_files].output[0] = 'l';
 }
 
-static	int		save_mod(t_env *e, struct stat *buf)
+static	int		save_mod(t_env *e, struct stat *buf, char *path)
 {
+	char namebuf[MAX_FSIZE];
+
 	check_type(e, buf);
 	if (buf->st_mode & S_IRUSR)
 		e->data[e->nb_files].output[1] = 'r';
@@ -73,6 +75,8 @@ static	int		save_mod(t_env *e, struct stat *buf)
 		e->data[e->nb_files].output[8] = 'w';
 	if (buf->st_mode & S_IXOTH)
 		e->data[e->nb_files].output[9] = 'x';
+	if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
+		e->data[e->nb_files].output[10] = '@';
 	return (10);
 }
 
@@ -132,7 +136,7 @@ int			save_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	if (!(gid = getgrgid(uid->pw_gid)))
 		return (0);
 	if (e->opt & L)
-		e->max_width.perm = save_mod(e, &buf);
+		e->max_width.perm = save_mod(e, &buf, path);
 	save_info(e, uid, gid, &buf);
 	swap_data(e);
 	e->nb_files++;

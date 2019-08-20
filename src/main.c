@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/17 19:24:06 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/20 13:03:14 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void	lst_dir_r(t_env *e, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	int i;
 
 	i = 0;
-	alphaqsort_dir(path_r, 0, path_r->nb_path - 1);
-	if (e->opt & T)
-		qsort_dir(path_r, 0, path_r->nb_path - 1);
+	swap_dir(e, path_r);
 	if (e->opt & SR)
 	{
 		i = path_r->nb_path - 1;
@@ -71,7 +69,7 @@ void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r)
 		}
 		total += save_data(e, path, dir_ent->d_name, path_r);
 	}
-	if (e->opt & L)
+	if (e->opt & L && e->nb_files > 0)
 		ft_printf("total %d\n", total);
 	save_output(e);
 	closedir(dir);
@@ -135,9 +133,6 @@ void	check_arg(t_env *e, t_path_r *arg, int ac, char **av)
 	else
 	{
 		i = 0;
-		// alphaqsort_dir(arg, 0, arg->nb_path - 1);
-		// if (e->opt & T)
-		// 	qsort_dir(arg, 0, arg->nb_path - 1);
 		while(i < arg->nb_path)
 		{
 			get_info(arg->path_lst[i].path, e);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_output.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 18:49:51 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/17 19:08:49 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/20 11:14:53 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int		save_output(t_env *e)
 		if (e->opt & L)
 		{
 			time = ctime((time_t *)&e->data[i].time);
-			ret += e->max_width.l - e->data[i].width.l + SPE;
+			ret += e->max_width.l - e->data[i].width.l + SPE + 1;
 			ret += ft_sprintf(&e->data[i].output[ret], "%d", e->data[i].nb_link);
 			e->data[i].output[ret++] = ' ';
 			ret += e->max_width.un - e->data[i].width.un;
 			ret += ft_sprintf(&e->data[i].output[ret], "%s", e->data[i].pw_name);
 			e->data[i].output[ret++] = ' ';
-			ret += e->max_width.gn - e->data[i].width.gn + 1 - SPE;
+			ret += e->max_width.gn - e->data[i].width.gn + SPE;
 			ret += ft_sprintf(&e->data[i].output[ret], "%s", e->data[i].gr_name);
 			e->data[i].output[ret++] = ' ';
-			ret += e->max_width.s - e->data[i].width.s + 1 - SPE;
+			ret += e->max_width.s - e->data[i].width.s + SPE;
 			ret += ft_sprintf(&e->data[i].output[ret], "%u ", e->data[i].st_size);
 			ret += ft_sprintf(&e->data[i].output[ret], "%.12s ", &time[4]);
 		}

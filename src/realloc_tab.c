@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   realloc_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 11:06:57 by sabri             #+#    #+#             */
-/*   Updated: 2019/07/30 02:22:37 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/20 11:17:48 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	realloc_tab(t_env *e)
 
 	i = 0;
 	e->capacity *= 2;
-	ft_printf("reaLLOC\n");
+	// ft_printf("reaLLOC\n");
 	if (!(tmp = ft_memalloc(sizeof(t_data) * (e->capacity))))
 	{
 		ft_memdel((void *)&e->data);

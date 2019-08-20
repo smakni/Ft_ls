@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:02:19 by marvin            #+#    #+#             */
-/*   Updated: 2019/08/17 20:00:54 by sabri            ###   ########.fr       */
+/*   Updated: 2019/08/20 11:30:22 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,19 @@ void		swap_data(t_env *e)
 	int		i;
 	t_data	tmp;
 
-	// i = e->nb_files;
-	// // ft_printf("\nswap for %s\n", e->data[i].f_name);
-	// // while (i > 0)
-	// // 	ft_printf(">>[%s]<<\n", e->data[--i].f_name);
 	i = e->nb_files;
 	if (e->opt & T)
 	{
 		while (i - 1 >= 0 && e->data[i].time > e->data[i - 1].time)
 		{
-			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
 			tmp = e->data[i];
 			e->data[i] = e->data[i - 1];
 			e->data[i - 1] = tmp;
 			i--;
 		}
-		while (i - 1 >= 0 && e->data[i].time == e->data[i - 1].time && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) > 0)
+		while (i - 1 >= 0 && e->data[i].time == e->data[i - 1].time
+		&& ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) < 0)
 		{
-			// ft_printf("i = %s == i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
 			tmp = e->data[i];
 			e->data[i] = e->data[i - 1];
 			e->data[i - 1] = tmp;
@@ -43,10 +38,9 @@ void		swap_data(t_env *e)
 	}
 	else
 	{	
-		while (i - 1 >= 0 && ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) < 0)
+		while (i - 1 >= 0
+		&& ft_strcmp(e->data[i].f_name, e->data[i - 1].f_name) < 0)
 		{
-			// ft_printf("SWAP_2\n");
-			// ft_printf("i = %s > i - 1 = %s\n", e->data[i].f_name, e->data[i - 1].f_name);
 			tmp = e->data[i];
 			e->data[i] = e->data[i - 1];
 			e->data[i - 1] = tmp;
@@ -55,22 +49,41 @@ void		swap_data(t_env *e)
 	}
 }
 
-void		swap_dir(t_path_r *path_r)
+void		swap_dir(t_env *e, t_path_r *path_r)
 {
 	int			i;
-	t_path		tmp;
+	t_path_r	tmp;
 
 	i = 0;
-	while (i < path_r->nb_path)
+	if (e->opt & T)
 	{
-		if (path_r->path_lst[i].time < path_r->path_lst[i + 1].time && i + 1 < path_r->nb_path)
+		while (i - 1 >= 0 
+		&& path_r->path_lst[i].time > path_r->path_lst[i - 1].time)
 		{
-			tmp = path_r->path_lst[i];
-			path_r->path_lst[i] = path_r->path_lst[i + 1];
-			path_r->path_lst[i + 1] = tmp;
-			i = 0;
+			tmp = path_r[i];
+			path_r[i] = path_r[i - 1];
+			path_r[i - 1] = tmp;
+			i--;
 		}
-		else
-			i++;
+		while (i - 1 >= 0 
+		&& path_r->path_lst[i].time == path_r->path_lst[i - 1].time
+		&& ft_strcmp(path_r->path_lst[i].path, path_r->path_lst[i - 1].path) < 0)
+		{
+			tmp = path_r[i];
+			path_r[i] = path_r[i - 1];
+			path_r[i - 1] = tmp;
+			i--;
+		}
+	}
+	else
+	{	
+		while (i - 1 >= 0
+		&& ft_strcmp(path_r->path_lst[i].path, path_r->path_lst[i - 1].path) < 0)
+		{
+			tmp = path_r[i];
+			path_r[i] = path_r[i - 1];
+			path_r[i - 1] = tmp;
+			i--;
+		}
 	}
 }

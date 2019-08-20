@@ -20,6 +20,7 @@
 # include <sys/dir.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/xattr.h>
 # include <pwd.h>
 # include <grp.h>
 # include <uuid/uuid.h>
@@ -27,7 +28,7 @@
 # if __APPLE__
 #    define MAX_FSIZE    1024
 #    define st_mtime    st_mtimespec.tv_sec
-	define	SPE			2
+#	 define	SPE			1
 # elif __linux__
 #    define MAX_FSIZE    256
 #    define S_ISVTX    __S_ISVTX
@@ -92,7 +93,7 @@ typedef	struct	s_env
 void	option(char *av, char *opt);
 int		realloc_tab(t_env *e);
 void	swap_data(t_env *e);
-void	swap_dir(t_path_r *path_r);
+void	swap_dir(t_env *e, t_path_r *path_r);
 int		save_data(t_env *e, char *path, char *file_name, t_path_r *path_r);
 int		save_output(t_env *e);
 void	qsort_data(t_data *data, int first, int last);
