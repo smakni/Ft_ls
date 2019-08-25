@@ -54,8 +54,9 @@ static void	check_type(t_env *e, struct stat *buf)
 
 static	int		save_mod(t_env *e, struct stat *buf, char *path)
 {
-	char namebuf[MAX_FSIZE];
+	//char namebuf[MAX_FSIZE];
 
+	(void)path;
 	check_type(e, buf);
 	if (buf->st_mode & S_IRUSR)
 		e->data[e->nb_files].output[1] = 'r';
@@ -75,8 +76,8 @@ static	int		save_mod(t_env *e, struct stat *buf, char *path)
 		e->data[e->nb_files].output[8] = 'w';
 	if (buf->st_mode & S_IXOTH)
 		e->data[e->nb_files].output[9] = 'x';
-	if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
-		e->data[e->nb_files].output[10] = '@';
+	//if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
+	//	e->data[e->nb_files].output[10] = '@';
 	return (10);
 }
 
@@ -127,7 +128,9 @@ int			save_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 			&& ft_strcmp(file_name, ".") != 0)
 	{
 		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);
-		path_r->path_lst[path_r->nb_path++].time = buf.st_mtime;
+		path_r->path_lst[path_r->nb_path].time = buf.st_mtime;
+		swap_dir(e, path_r);
+		path_r->nb_path++;
 	}
 	ft_sprintf(e->data[e->nb_files].f_name, "%s", file_name);
 	e->data[e->nb_files].time = buf.st_mtime;

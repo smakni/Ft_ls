@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/20 13:03:14 by smakni           ###   ########.fr       */
+/*   Updated: 2019/08/25 02:22:01 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	lst_dir_r(t_env *e, t_path_r *path_r, void (*get_info)(char *, t_env *))
 	int i;
 
 	i = 0;
-	swap_dir(e, path_r);
 	if (e->opt & SR)
 	{
 		i = path_r->nb_path - 1;
@@ -76,12 +75,12 @@ void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r)
 	return ;
 }
 
-void	get_info(char *path,t_env *e) // check if link don't lst
+void	get_info(char *path,t_env *e)
 {
 	struct	stat	buf;
 	t_path_r		path_r;
 
-	ft_bzero(&path_r, sizeof(path_r));
+	path_r.nb_path = 0;
 	if ((stat(path, &buf)) == -1)
 		ft_printf("ft_ls: %s: No such file or directory\n", path);
 	else
