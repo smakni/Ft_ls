@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:04:54 by sabri             #+#    #+#             */
-/*   Updated: 2019/09/10 20:26:50 by sabri            ###   ########.fr       */
+/*   Updated: 2019/09/18 18:53:27 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r)
 	}
 	if (e->opt & L && e->nb_files > 0)
 		ft_printf("total %d\n", total);
-	save_output(e);
+	write_output(e);
 	closedir(dir);
 }

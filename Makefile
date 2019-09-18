@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
+#    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/09/10 20:26:50 by sabri            ###   ########.fr        #
+#    Updated: 2019/09/18 18:53:27 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC_NAME	=	main.c\
 				realloc_tab.c\
 				swap_data.c\
 				extract_data.c\
-				save_output.c\
+				write_output.c\
 				qsort_functions.c\
 				print_functions.c\
 				lst_functions.c

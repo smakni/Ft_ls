@@ -95,7 +95,7 @@ int		realloc_tab(t_env *e);
 void	swap_data(t_env *e);
 void	swap_dir(t_env *e, t_path_r *path_r);
 int		extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r);
-int		save_output(t_env *e);
+int		write_output(t_env *e);
 void	qsort_data(t_data *data, int first, int last);
 void	qsort_dir(t_path_r *path_r, int first, int last);
 void	alphaqsort_data(t_data *data, int first, int last);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/10 20:26:50 by sabri            ###   ########.fr       */
+/*   Updated: 2019/09/18 18:53:27 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_info(char *path,t_env *e)
 		else
 		{
 			extract_data(e, path, path, NULL);
-			save_output(e);
+			write_output(e);
 			print_data(e);
 			e->cursor++;
 			e->nb_files = 0;

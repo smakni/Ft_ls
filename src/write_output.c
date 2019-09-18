@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_output.c                                      :+:      :+:    :+:   */
+/*   write_output.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include <ft_ls.h>
 
-int		save_output(t_env *e)
+int		write_output(t_env *e)
 {
 	int			i;
 	int			ret;
