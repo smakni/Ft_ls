@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:02:19 by marvin            #+#    #+#             */
-/*   Updated: 2019/08/20 11:30:22 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/10 20:41:31 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		swap_dir(t_env *e, t_path_r *path_r)
 	}
 	else
 	{	
+		ft_printf("DEBUG[%s]\n", path_r->path_lst[i]);
 		while (i - 1 >= 0
 		&& ft_strcmp(path_r->path_lst[i].path, path_r->path_lst[i - 1].path) < 0)
 		{

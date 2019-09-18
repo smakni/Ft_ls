@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_data.c                                        :+:      :+:    :+:   */
+/*   extract_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/08/20 12:22:37 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/10 20:26:27 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	check_width_st_size(off_t st_size)
 	return (i);
 }
 
-static void	check_type(t_env *e, struct stat *buf)
+static void	write_type(t_env *e, struct stat *buf)
 {
 	ft_memset(e->data[e->nb_files].output, ' ', 4092);
 	ft_memset(e->data[e->nb_files].output, '-', 10);
@@ -52,12 +52,12 @@ static void	check_type(t_env *e, struct stat *buf)
 		e->data[e->nb_files].output[0] = 'l';
 }
 
-static	int		save_mod(t_env *e, struct stat *buf, char *path)
+static	int		write_mod(t_env *e, struct stat *buf, char *path)
 {
 	//char namebuf[MAX_FSIZE];
 
 	(void)path;
-	check_type(e, buf);
+	write_type(e, buf);
 	if (buf->st_mode & S_IRUSR)
 		e->data[e->nb_files].output[1] = 'r';
 	if (buf->st_mode & S_IWUSR)
@@ -81,7 +81,7 @@ static	int		save_mod(t_env *e, struct stat *buf, char *path)
 	return (10);
 }
 
-static	void	save_info(t_env *e, struct passwd *uid,
+static	void	save_data(t_env *e, struct passwd *uid,
 						struct group *gid, struct stat *buf)
 {
 	if (e->opt & L)
@@ -101,7 +101,7 @@ static	void	save_info(t_env *e, struct passwd *uid,
 	}
 }
 
-int			save_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
+int			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 {
 	struct stat		buf;
 	struct passwd	*uid;
@@ -139,8 +139,8 @@ int			save_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	if (!(gid = getgrgid(uid->pw_gid)))
 		return (0);
 	if (e->opt & L)
-		e->max_width.perm = save_mod(e, &buf, path);
-	save_info(e, uid, gid, &buf);
+		e->max_width.perm = write_mod(e, &buf, path);
+	save_data(e, uid, gid, &buf);
 	swap_data(e);
 	e->nb_files++;
 	return (buf.st_blocks);

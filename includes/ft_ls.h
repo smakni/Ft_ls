@@ -33,7 +33,7 @@
 #    define MAX_FSIZE    256
 #    define S_ISVTX    __S_ISVTX
 #    define S_ISWHT(x)    0
-#	 define	SPE			1
+#	 define	SPE			0
 # endif
 
 # define R 	1
@@ -94,7 +94,7 @@ void	option(char *av, char *opt);
 int		realloc_tab(t_env *e);
 void	swap_data(t_env *e);
 void	swap_dir(t_env *e, t_path_r *path_r);
-int		save_data(t_env *e, char *path, char *file_name, t_path_r *path_r);
+int		extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r);
 int		save_output(t_env *e);
 void	qsort_data(t_data *data, int first, int last);
 void	qsort_dir(t_path_r *path_r, int first, int last);
@@ -102,5 +102,7 @@ void	alphaqsort_data(t_data *data, int first, int last);
 void	alphaqsort_dir(t_path_r *path_r, int first, int last);
 void	print_path(t_env *e, char *path);
 void	print_data(t_env *e);
+void	lst_dir_r(t_env *e, t_path_r *path_r, void (*get_info)(char *, t_env *));
+void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r);
 
 #endif

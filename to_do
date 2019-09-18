@@ -1,3 +1,1 @@
-check order in sorting
-better qsort > fix stackoverflow
-leaks in outpu
+check order in sorting with R (bug after reorganisation)

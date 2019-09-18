@@ -6,7 +6,7 @@
 #    By: sabri <sabri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/08/13 17:51:32 by sabri            ###   ########.fr        #
+#    Updated: 2019/09/10 20:26:50 by sabri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,11 @@ SRC_NAME	=	main.c\
 				option.c\
 				realloc_tab.c\
 				swap_data.c\
-				save_data.c\
+				extract_data.c\
 				save_output.c\
 				qsort_functions.c\
-				print_functions.c
+				print_functions.c\
+				lst_functions.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
