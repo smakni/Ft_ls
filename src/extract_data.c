@@ -54,9 +54,9 @@ static void	write_type(t_env *e, struct stat *buf)
 
 static	int		write_mod(t_env *e, struct stat *buf, char *path)
 {
-	//char namebuf[MAX_FSIZE];
+	char namebuf[MAX_FSIZE];
 
-	(void)path;
+	//(void)path;
 	write_type(e, buf);
 	if (buf->st_mode & S_IRUSR)
 		e->data[e->nb_files].output[1] = 'r';
@@ -76,8 +76,8 @@ static	int		write_mod(t_env *e, struct stat *buf, char *path)
 		e->data[e->nb_files].output[8] = 'w';
 	if (buf->st_mode & S_IXOTH)
 		e->data[e->nb_files].output[9] = 'x';
-	//if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
-	//	e->data[e->nb_files].output[10] = '@';
+	if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
+		e->data[e->nb_files].output[10] = '@';
 	return (10);
 }
 
