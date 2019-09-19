@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 18:00:34 by smakni            #+#    #+#             */
-/*   Updated: 2019/07/25 15:34:52 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/19 15:03:18 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void		option(char *av, char *opt)
 {
+	if (ft_strcmp(av, "--") == 0)
+		return ;
 	av++;
 	while(*av)
 	{
@@ -27,6 +29,8 @@ void		option(char *av, char *opt)
 			*opt |= 8;
 		else if (*av == 't')
 			*opt |= 16;
+		else if (*av == '1')
+			*opt |= 32;
 		else
 		{
 			ft_printf("/bin/ls: illegal option -- %c\n", *av);

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extract_data.c                                        :+:      :+:    :+:   */
+/*   extract_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/10 20:26:27 by sabri            ###   ########.fr       */
+/*   Updated: 2019/09/19 14:32:46 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-static int	check_width_link(nlink_t nb_link)
+static	int		check_width_link(nlink_t nb_link)
 {
 	int i;
 
@@ -27,7 +27,7 @@ static int	check_width_link(nlink_t nb_link)
 	return (i);
 }
 
-static int	check_width_st_size(off_t st_size)
+static	int		check_width_st_size(off_t st_size)
 {
 	int i;
 
@@ -40,45 +40,6 @@ static int	check_width_st_size(off_t st_size)
 	if (i == 0)
 		return (1);
 	return (i);
-}
-
-static void	write_type(t_env *e, struct stat *buf)
-{
-	ft_memset(e->data[e->nb_files].output, ' ', 4092);
-	ft_memset(e->data[e->nb_files].output, '-', 10);
-	if ((buf->st_mode & S_IFMT) == S_IFDIR)
-		e->data[e->nb_files].output[0] = 'd';
-	else if ((buf->st_mode & S_IFMT) == S_IFLNK)
-		e->data[e->nb_files].output[0] = 'l';
-}
-
-static	int		write_mod(t_env *e, struct stat *buf, char *path)
-{
-	char namebuf[MAX_FSIZE];
-
-	//(void)path;
-	write_type(e, buf);
-	if (buf->st_mode & S_IRUSR)
-		e->data[e->nb_files].output[1] = 'r';
-	if (buf->st_mode & S_IWUSR)
-		e->data[e->nb_files].output[2] = 'w';
-	if (buf->st_mode & S_IXUSR)
-		e->data[e->nb_files].output[3] = 'x';
-	if (buf->st_mode & S_IRGRP)
-		e->data[e->nb_files].output[4] = 'r';
-	if (buf->st_mode & S_IWGRP)
-		e->data[e->nb_files].output[5] = 'w';
-	if (buf->st_mode & S_IXGRP)
-		e->data[e->nb_files].output[6] = 'x';
-	if (buf->st_mode & S_IROTH)
-		e->data[e->nb_files].output[7] = 'r';
-	if (buf->st_mode & S_IWOTH)
-		e->data[e->nb_files].output[8] = 'w';
-	if (buf->st_mode & S_IXOTH)
-		e->data[e->nb_files].output[9] = 'x';
-	if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
-		e->data[e->nb_files].output[10] = '@';
-	return (10);
 }
 
 static	void	save_data(t_env *e, struct passwd *uid,
@@ -101,7 +62,7 @@ static	void	save_data(t_env *e, struct passwd *uid,
 	}
 }
 
-int			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
+void			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 {
 	struct stat		buf;
 	struct passwd	*uid;
@@ -115,13 +76,13 @@ int			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 		if ((stat(path, &buf)) == -1)
 		{
 			ft_printf("save_stat : acces impossible a %s\n", path);
-			return (0);
+			return ;
 		}
 	}
 	else if ((lstat(path, &buf)) == -1)
 	{
 			ft_printf("save_stat : acces impossible a %s\n", path);
-			return (0);
+			return ;
 	}
 	if ((e->opt & R) && (buf.st_mode & S_IFMT) == S_IFDIR
 			&& ft_strcmp(file_name, "..") != 0
@@ -135,13 +96,13 @@ int			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	ft_sprintf(e->data[e->nb_files].f_name, "%s", file_name);
 	e->data[e->nb_files].time = buf.st_mtime;
 	if (!(uid = getpwuid(buf.st_uid)))
-		return (0);
+		return ;
 	if (!(gid = getgrgid(uid->pw_gid)))
-		return (0);
+		return ;
 	if (e->opt & L)
 		e->max_width.perm = write_mod(e, &buf, path);
 	save_data(e, uid, gid, &buf);
 	swap_data(e);
 	e->nb_files++;
-	return (buf.st_blocks);
+	e->total += buf.st_blocks;
 }

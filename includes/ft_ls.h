@@ -28,7 +28,7 @@
 # if __APPLE__
 #    define MAX_FSIZE    1024
 #    define st_mtime    st_mtimespec.tv_sec
-#	 define	SPE			1
+#	 define	SPE			2
 # elif __linux__
 #    define MAX_FSIZE    256
 #    define S_ISVTX    __S_ISVTX
@@ -84,9 +84,11 @@ typedef	struct	s_env
 	char 		*path;
 	t_width		max_width;
 	t_data		*data;
+	int			total;
 	int			cursor;
 	int			nb_files;
 	int			capacity;
+	int			nb_arg;
 	char 		opt;
 }				t_env;
 
@@ -94,15 +96,17 @@ void	option(char *av, char *opt);
 int		realloc_tab(t_env *e);
 void	swap_data(t_env *e);
 void	swap_dir(t_env *e, t_path_r *path_r);
-int		extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r);
-int		write_output(t_env *e);
+void	extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r);
+void	write_output(t_env *e);
+int		write_mod(t_env *e, struct stat *buf, char *path);
 void	qsort_data(t_data *data, int first, int last);
 void	qsort_dir(t_path_r *path_r, int first, int last);
 void	alphaqsort_data(t_data *data, int first, int last);
 void	alphaqsort_dir(t_path_r *path_r, int first, int last);
-void	print_path(t_env *e, char *path);
-void	print_data(t_env *e);
+void	print_data(t_env *e, char *path);
 void	lst_dir_r(t_env *e, t_path_r *path_r, void (*get_info)(char *, t_env *));
 void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r);
+void	arg_parsing(t_env *e, t_path_r *arg, int ac, char **av);
+void	get_info(char *path, t_env *e);
 
 #endif

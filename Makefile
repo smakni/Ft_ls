@@ -6,7 +6,7 @@
 #    By: smakni <smakni@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 13:20:28 by smakni            #+#    #+#              #
-#    Updated: 2019/09/18 18:53:27 by smakni           ###   ########.fr        #
+#    Updated: 2019/09/19 11:30:55 by smakni           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRC_NAME	=	main.c\
 				write_output.c\
 				qsort_functions.c\
 				print_functions.c\
-				lst_functions.c
+				lst_functions.c\
+				arg_parsing.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
