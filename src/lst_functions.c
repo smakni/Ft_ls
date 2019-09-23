@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:04:54 by sabri             #+#    #+#             */
-/*   Updated: 2019/09/19 14:33:43 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 00:02:19 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r)
 	ft_bzero(path, sizeof(path));
 	if ((dir = opendir(dir_name)) == NULL)
 	{
-		ft_printf("ls: cannot open directory '%s': Permission denied\n", dir_name);
+		ft_printf(NO_PERM, dir_name);
 		return ;
 	}
 	while ((dir_ent = readdir(dir)) != NULL)
