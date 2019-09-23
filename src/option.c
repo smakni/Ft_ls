@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 18:00:34 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 15:03:18 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 14:32:19 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void		option(char *av, char *opt)
 {
-	if (ft_strcmp(av, "--") == 0)
-		return ;
 	av++;
 	while(*av)
 	{

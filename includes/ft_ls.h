@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 10:05:17 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 14:33:03 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@
 # define SR 8
 # define T 	16
 
-# define CAPACITY 	1024
-# define NO_PERM	"ls: cannot open directory '%s': Permission denied\n"
+# define CAPACITY 			1024
+# define NO_PERM			"ls: %s: Permission denied\n"
+# define IMPOSSIBLE_ACCES	"ls: %s: No such file or directory\n"
+# define CURRENT_YEAR		2019
 
 typedef	struct s_width
 {
@@ -106,7 +108,7 @@ void	alphaqsort_dir(t_path_r *path_r, int first, int last);
 void	print_data(t_env *e, char *path);
 void	lst_dir_r(t_env *e, t_path_r *path_r, void (*get_info)(char *, t_env *));
 void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r);
-void	arg_parsing(t_env *e, t_path_r *arg, int ac, char **av);
+void	arg_parsing(t_env *e, t_path_r *arg, char **av);
 void	get_info(char *path, t_env *e);
 void	save_data(t_env *e, struct passwd *uid,
 						struct group *gid, struct stat *buf);

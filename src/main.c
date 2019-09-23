@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 16:48:42 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 15:21:41 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	get_info(char *path, t_env *e)
 		{
 			extract_data(e, path, path, NULL);
 			write_output(e);
-			//ft_printf("%s\n", e->data[0].output);
 			e->cursor++;
 			e->nb_files = 0;
 		}
@@ -57,7 +56,7 @@ int		main(int ac, char **av)
 	if (ac == 1)
 	 	get_info(".", &e);
 	else
-		arg_parsing(&e, &arg, ac, av);
+		arg_parsing(&e, &arg, av);
 	free(e.data);
     return (0);
 }

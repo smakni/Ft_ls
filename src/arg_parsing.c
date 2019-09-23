@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:26:30 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 18:02:24 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 16:01:59 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void			extract_arg(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	{
 		if ((stat(path, &buf)) == -1)
 		{
-			ft_printf("save_stat : acces impossible a %s\n", path);
+			ft_printf(IMPOSSIBLE_ACCES, path);
 			return ;
 		}
 	}
 	else if ((lstat(path, &buf)) == -1)
 	{
-			ft_printf("save_stat : acces impossible a %s\n", path);
+			ft_printf(IMPOSSIBLE_ACCES, path);
 			return ;
 	}
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
@@ -55,31 +55,37 @@ void			extract_arg(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	e->nb_files++;
 }
 
-void	check_arg(t_env *e, t_path_r *arg, int ac, char **av)
+void	check_arg(t_env *e, t_path_r *arg, char **av) //first check option
 {
 	int i;
+	int	help;
 	
 	i = 1;
-	while(i < ac)
+	help = 0;
+	while(av[i] && av[i][0] == '-' && av[i][1] != 0 && help == 0)
 	{
-		if (av[i][0] == '-' && av[i][1] != 0)
-			option(av[i], &e->opt);
+		if (ft_strcmp(av[i], "--") == 0)
+			help++;
 		else
-		{
-			extract_arg(e, av[i], av[i], arg);
-			write_output(e);
-		}
+			option(av[i], &e->opt);
 		i++;
 	}
-	e->nb_arg = arg->nb_path;
+	while (av[i])
+	{
+		extract_arg(e, av[i], av[i], arg);
+		write_output(e);
+		e->nb_arg++;
+		i++;
+	}
 }
 
-void	arg_parsing(t_env *e, t_path_r *arg, int ac, char **av)
+void	arg_parsing(t_env *e, t_path_r *arg, char **av)
 {
 	int i;
 	
-	check_arg(e, arg, ac, av);
-	if (e->opt > 0 && arg->nb_path == 0 && ac == 2)
+	check_arg(e, arg, av);
+	// ft_printf("nb = %d\n", arg->nb_path);
+	if (e->nb_arg == 0)
 		get_info(".", e);
 	else
 	{

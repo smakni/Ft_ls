@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 18:49:51 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 14:47:55 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 10:42:00 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int			write_mod(t_env *e, struct stat *buf, char *path)
 
 int		write_details(t_env *e, int i, int ret)
 {
-	char * time;
+	char 	*time;
+	int		tmp;
 
 	time = ctime((time_t *)&e->data[i].time);
 	ret += e->max_width.l - e->data[i].width.l + SPE;
@@ -84,7 +85,11 @@ int		write_details(t_env *e, int i, int ret)
 	ret += e->max_width.gn + SPE;
 	ret += e->max_width.s - e->data[i].width.s;
 	ret += ft_sprintf(&e->data[i].output[ret], "%u ", e->data[i].st_size);
-	ret += ft_sprintf(&e->data[i].output[ret], "%.12s ", &time[4]);
+	ret += ft_sprintf(&e->data[i].output[ret], "%.7s", &time[4]);
+	if ((tmp = ft_atoi(&time[20])) != CURRENT_YEAR)
+		ret += ft_sprintf(&e->data[i].output[ret], " %d ", tmp);
+	else
+		ret += ft_sprintf(&e->data[i].output[ret], "%.5s ", &time[11]);
 	return (ret);
 }
 
