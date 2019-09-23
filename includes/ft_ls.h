@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 14:33:03 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 18:14:21 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ void	arg_parsing(t_env *e, t_path_r *arg, char **av);
 void	get_info(char *path, t_env *e);
 void	save_data(t_env *e, struct passwd *uid,
 						struct group *gid, struct stat *buf);
+int		check_stat(t_env *e, char *path, struct stat *buf);
 
 #endif

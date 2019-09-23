@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 16:02:16 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 18:31:04 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ static	int		check_width_st_size(off_t st_size)
 	return (i);
 }
 
+int				check_stat(t_env *e, char *path, struct stat *buf)
+{
+	if (readlink(path, e->data[e->nb_files].link, sizeof(e->data[e->nb_files].link)) == -1)
+	{
+		if ((stat(path, buf)) == -1)
+		{
+			ft_printf(IMPOSSIBLE_ACCES, path);
+			return (-1);
+		}
+	}
+	else if ((lstat(path, buf)) == -1)
+	{
+			ft_printf(IMPOSSIBLE_ACCES, path);
+			return(-1);
+	}
+	return (0);
+}
+
 void	save_data(t_env *e, struct passwd *uid,
 						struct group *gid, struct stat *buf)
 {
@@ -62,6 +80,19 @@ void	save_data(t_env *e, struct passwd *uid,
 	}
 }
 
+void			save_recurcive_dir(t_env *e, struct stat *buf, char *path, t_path_r *path_r)
+{
+	if ((e->opt & R) && (buf->st_mode & S_IFMT) == S_IFDIR
+			&& ft_strcmp(e->data[e->nb_files].f_name, "..") != 0
+			&& ft_strcmp(e->data[e->nb_files].f_name, ".") != 0)
+	{
+		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);
+		path_r->path_lst[path_r->nb_path].time = buf->st_mtime;
+		swap_dir(e, path_r);
+		path_r->nb_path++;
+	}
+}
+
 void			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 {
 	struct stat		buf;
@@ -71,29 +102,8 @@ void			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	if (e->nb_files >= e->capacity)
 		if (realloc_tab(e) == -1)
 			exit(-1);
-	if (readlink(path, e->data[e->nb_files].link,
-			sizeof(e->data[e->nb_files].link)) == -1)
-	{
-		if ((stat(path, &buf)) == -1)
-		{
-			ft_printf(NO_PERM, path);
-			return ;
-		}
-	}
-	else if ((lstat(path, &buf)) == -1)
-	{
-			ft_printf(NO_PERM, path);
-			return ;
-	}
-	if ((e->opt & R) && (buf.st_mode & S_IFMT) == S_IFDIR
-			&& ft_strcmp(file_name, "..") != 0
-			&& ft_strcmp(file_name, ".") != 0)
-	{
-		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);
-		path_r->path_lst[path_r->nb_path].time = buf.st_mtime;
-		swap_dir(e, path_r);
-		path_r->nb_path++;
-	}
+	if (check_stat(e, path, &buf) == -1)
+		return ;
 	ft_sprintf(e->data[e->nb_files].f_name, "%s", file_name);
 	e->data[e->nb_files].time = buf.st_mtime;
 	if (!(uid = getpwuid(buf.st_uid)))
@@ -104,6 +114,7 @@ void			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)
 		e->max_width.perm = write_mod(e, &buf, path);
 	save_data(e, uid, gid, &buf);
 	swap_data(e);
-	e->nb_files++;
+	save_recurcive_dir(e, &buf, path, path_r);
 	e->total += buf.st_blocks;
+	e->nb_files++;
 }

@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:26:30 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 16:01:59 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 18:13:14 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,8 @@ void			extract_arg(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	if (e->nb_files >= e->capacity)
 		if (realloc_tab(e) == -1)
 			exit(-1);
-	if (readlink(path, e->data[e->nb_files].link, sizeof(e->data[e->nb_files].link)) == -1)
-	{
-		if ((stat(path, &buf)) == -1)
-		{
-			ft_printf(IMPOSSIBLE_ACCES, path);
-			return ;
-		}
-	}
-	else if ((lstat(path, &buf)) == -1)
-	{
-			ft_printf(IMPOSSIBLE_ACCES, path);
-			return ;
-	}
+	if (check_stat(e,path, &buf) == -1)
+		return ;
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
 		path_r->path_lst[path_r->nb_path].path = ft_strdup(path);

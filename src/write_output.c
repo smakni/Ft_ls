@@ -6,31 +6,11 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 18:49:51 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 10:42:00 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 18:37:36 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-
-// int	write_details(t_env *e, int i, int ret)
-// {
-// 	char * time;
-
-// 	time = ctime((time_t *)&e->data[i].time);
-// 	ret += e->max_width.l - e->data[i].width.l + SPE + 1;
-// 	ret += ft_sprintf(&e->data[i].output[ret], "%d", e->data[i].nb_link);
-// 	e->data[i].output[ret++] = ' ';
-// 	ret += e->max_width.un - e->data[i].width.un;
-// 	ret += ft_sprintf(&e->data[i].output[ret], "%s", e->data[i].pw_name);
-// 	e->data[i].output[ret++] = ' ';
-// 	ret += e->max_width.gn - e->data[i].width.gn + SPE;
-// 	ret += ft_sprintf(&e->data[i].output[ret], "%s", e->data[i].gr_name);
-// 	e->data[i].output[ret++] = ' ';
-// 	ret += e->max_width.s - e->data[i].width.s + SPE;
-// 	ret += ft_sprintf(&e->data[i].output[ret], "%u ", e->data[i].st_size);
-// 	ret += ft_sprintf(&e->data[i].output[ret], "%.12s ", &time[4]);
-// 	return (ret);
-// }
 
 static void	write_type(t_env *e, struct stat *buf)
 {
@@ -40,6 +20,14 @@ static void	write_type(t_env *e, struct stat *buf)
 		e->data[e->nb_files].output[0] = 'd';
 	else if ((buf->st_mode & S_IFMT) == S_IFLNK)
 		e->data[e->nb_files].output[0] = 'l';
+	else if ((buf->st_mode & S_IFMT) == S_IFSOCK)
+		e->data[e->nb_files].output[0] = 's';
+	else if ((buf->st_mode & S_IFMT) == S_IFCHR)
+		e->data[e->nb_files].output[0] = 'c';
+	else if ((buf->st_mode & S_IFMT) == S_IFIFO)
+		e->data[e->nb_files].output[0] = 'p';
+	else if ((buf->st_mode & S_IFMT) == S_IFLNK)
+		e->data[e->nb_files].output[0] = 'n';
 }
 
 int			write_mod(t_env *e, struct stat *buf, char *path)
@@ -48,7 +36,7 @@ int			write_mod(t_env *e, struct stat *buf, char *path)
 
 	write_type(e, buf);
 	if (buf->st_mode & S_IRUSR)
-		e->data[e->nb_files].output[1] = 'r';
+		e->data[e->nb_files].output[1] = 'r';	
 	if (buf->st_mode & S_IWUSR)
 		e->data[e->nb_files].output[2] = 'w';
 	if (buf->st_mode & S_IXUSR)
