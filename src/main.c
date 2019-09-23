@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:19 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 15:30:29 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/19 16:48:42 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	get_info(char *path, t_env *e)
 		{
 			extract_data(e, path, path, NULL);
 			write_output(e);
-			print_data(e, path);
+			//ft_printf("%s\n", e->data[0].output);
 			e->cursor++;
 			e->nb_files = 0;
 		}

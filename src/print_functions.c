@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 14:40:23 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 14:55:28 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/19 16:51:17 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,19 @@ void	print_data(t_env *e, char *path)
 	int i;
 
 	i = 0;
-	print_path(e, path);
-	if (e->opt & L && e->nb_files > 0)
-		ft_printf("total %d\n", e->total);
-	if (e->opt & SR)
+	if (path != NULL)
 	{
-		i = e->nb_files - 1;
-		while (i >= 0)
-			ft_printf("%s\n", e->data[i--].output);
+		print_path(e, path);
+		if (e->opt & L && e->nb_files > 0)
+			ft_printf("total %d\n", e->total);
 	}
-	else
-		while (i < e->nb_files)
-			ft_printf("%s\n", e->data[i++].output);
+		if (e->opt & SR)
+		{
+			i = e->nb_files - 1;
+			while (i >= 0)
+				ft_printf("%s\n", e->data[i--].output);
+		}
+		else
+			while (i < e->nb_files)
+				ft_printf("%s\n", e->data[i++].output);
 }

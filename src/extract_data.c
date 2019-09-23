@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 14:32:46 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/19 16:51:34 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static	int		check_width_st_size(off_t st_size)
 	return (i);
 }
 
-static	void	save_data(t_env *e, struct passwd *uid,
+void	save_data(t_env *e, struct passwd *uid,
 						struct group *gid, struct stat *buf)
 {
 	if (e->opt & L)

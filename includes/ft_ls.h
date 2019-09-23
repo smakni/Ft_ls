@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 15:37:16 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/19 16:51:46 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ void	lst_dir_r(t_env *e, t_path_r *path_r, void (*get_info)(char *, t_env *));
 void	lst_dir(t_env *e, char *dir_name, t_path_r *path_r);
 void	arg_parsing(t_env *e, t_path_r *arg, int ac, char **av);
 void	get_info(char *path, t_env *e);
+void	save_data(t_env *e, struct passwd *uid,
+						struct group *gid, struct stat *buf);
 
 #endif
