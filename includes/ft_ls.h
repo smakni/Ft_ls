@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sabri <sabri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:54:56 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/19 15:37:16 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/23 00:02:15 by sabri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #    define MAX_FSIZE    256
 #    define S_ISVTX    __S_ISVTX
 #    define S_ISWHT(x)    0
-#	 define	SPE			0
+#	 define	SPE			1
 # endif
 
 # define R 	1
@@ -41,7 +41,8 @@
 # define SR 8
 # define T 	16
 
-# define CAPACITY 1024
+# define CAPACITY 	1024
+# define NO_PERM	"ls: cannot open directory '%s': Permission denied\n"
 
 typedef	struct s_width
 {
