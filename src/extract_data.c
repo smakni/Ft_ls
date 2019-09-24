@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 15:37:58 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 18:31:04 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/24 12:37:00 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,6 @@ static	int		check_width_st_size(off_t st_size)
 	return (i);
 }
 
-int				check_stat(t_env *e, char *path, struct stat *buf)
-{
-	if (readlink(path, e->data[e->nb_files].link, sizeof(e->data[e->nb_files].link)) == -1)
-	{
-		if ((stat(path, buf)) == -1)
-		{
-			ft_printf(IMPOSSIBLE_ACCES, path);
-			return (-1);
-		}
-	}
-	else if ((lstat(path, buf)) == -1)
-	{
-			ft_printf(IMPOSSIBLE_ACCES, path);
-			return(-1);
-	}
-	return (0);
-}
-
 void	save_data(t_env *e, struct passwd *uid,
 						struct group *gid, struct stat *buf)
 {
@@ -91,6 +73,24 @@ void			save_recurcive_dir(t_env *e, struct stat *buf, char *path, t_path_r *path
 		swap_dir(e, path_r);
 		path_r->nb_path++;
 	}
+}
+
+int				check_stat(t_env *e, char *path, struct stat *buf)
+{
+	if (readlink(path, e->data[e->nb_files].link, sizeof(e->data[e->nb_files].link)) == -1)
+	{
+		if ((stat(path, buf)) == -1)
+		{
+			ft_printf(IMPOSSIBLE_ACCES, path);
+			return (-1);
+		}
+	}
+	else if ((lstat(path, buf)) == -1)
+	{
+			ft_printf(IMPOSSIBLE_ACCES, path);
+			return(-1);
+	}
+	return (0);
 }
 
 void			extract_data(t_env *e, char *path, char *file_name, t_path_r *path_r)

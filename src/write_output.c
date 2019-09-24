@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 18:49:51 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 18:37:36 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/24 13:57:49 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		write_details(t_env *e, int i, int ret)
 	ret += e->max_width.s - e->data[i].width.s;
 	ret += ft_sprintf(&e->data[i].output[ret], "%u ", e->data[i].st_size);
 	ret += ft_sprintf(&e->data[i].output[ret], "%.7s", &time[4]);
-	if ((tmp = ft_atoi(&time[20])) != CURRENT_YEAR)
+	if ((tmp = ft_atoi(&time[20])) != CURRENT_YEAR) 						// >> less then 6 month
 		ret += ft_sprintf(&e->data[i].output[ret], " %d ", tmp);
 	else
 		ret += ft_sprintf(&e->data[i].output[ret], "%.5s ", &time[11]);

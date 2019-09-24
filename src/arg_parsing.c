@@ -6,7 +6,7 @@
 /*   By: smakni <smakni@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:26:30 by smakni            #+#    #+#             */
-/*   Updated: 2019/09/23 18:13:14 by smakni           ###   ########.fr       */
+/*   Updated: 2019/09/24 14:51:20 by smakni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			extract_arg(t_env *e, char *path, char *file_name, t_path_r *path_r)
 	e->nb_files++;
 }
 
-void	check_arg(t_env *e, t_path_r *arg, char **av) //first check option
+void	check_arg(t_env *e, t_path_r *arg, char **av)	
 {
 	int i;
 	int	help;
@@ -73,7 +73,6 @@ void	arg_parsing(t_env *e, t_path_r *arg, char **av)
 	int i;
 	
 	check_arg(e, arg, av);
-	// ft_printf("nb = %d\n", arg->nb_path);
 	if (e->nb_arg == 0)
 		get_info(".", e);
 	else
