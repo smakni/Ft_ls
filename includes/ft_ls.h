@@ -44,7 +44,7 @@
 # define CAPACITY 			1024
 # define NO_PERM			"ls: %s: Permission denied\n"
 # define IMPOSSIBLE_ACCES	"ls: %s: No such file or directory\n"
-# define CURRENT_YEAR		2019
+# define CURRENT_YEAR		2020
 
 typedef	struct s_width
 {
