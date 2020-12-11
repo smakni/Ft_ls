@@ -1,0 +1,22 @@
+total 248
+-rw-r--r--   1 sab  staff       0 Oct 26 11:52 -
+-rw-r--r--   1 sab  staff       0 Oct 26 11:52 --
+-rw-r--r--   1 sab  staff       0 Oct 26 11:52 ---
+-rw-r--r--   1 sab  staff    2053 Oct 26 11:52 Makefile
+-rw-r--r--   1 sab  staff       0 Oct 26 11:52 a
+-rw-r--r--   1 sab  staff       7 Oct 26 11:52 auteur
+lrwxr-xr-x   1 sab  staff       1 Oct 26 11:52 b -> a
+-rw-r--r--   1 sab  staff    1166 Oct 27 10:19 exec_1.debug
+-rw-r--r--   1 sab  staff       0 Oct 27 10:19 exec_2.debug
+-rwxr-xr-x   1 sab  staff  107976 Oct 27 09:40 ft_ls
+drwxr-xr-x   3 sab  staff      96 Oct 26 12:49 ft_ls.dSYM
+-rw-r--r--   1 sab  staff       0 Oct 26 11:52 future
+drwxr-xr-x   3 sab  staff      96 Oct 26 11:52 includes
+drwxr-xr-x  11 sab  staff     352 Oct 27 09:40 libft
+drwxr-xr-x   7 sab  staff     224 Oct 26 11:52 mydir
+drwxr-xr-x  12 sab  staff     384 Oct 27 09:40 obj
+drwxr-xr-x  12 sab  staff     384 Oct 26 11:52 src
+lrwxr-xr-x   1 sab  staff       5 Oct 26 11:52 symdir -> mydir
+drwxr-xr-x   4 sab  staff     128 Oct 26 11:52 test
+-rwxr-xr-x   1 sab  staff    1263 Oct 27 10:10 test.sh
+lrwxr-xr-x   1 sab  staff      11 Oct 26 11:52 test_random -> /dev/random

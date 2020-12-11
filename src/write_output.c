@@ -12,6 +12,21 @@
 
 #include <ft_ls.h>
 
+static long convert_data_to_second(int year, int month, int day, int hour, int s)
+{
+	double	years_to_s;
+	int		month_to_s;
+	int		day_to_s;
+	int		hour_to_s;
+
+	// years_to_s = year * 31536000;
+	month_to_s = month * 2592000;
+	day_to_s = day * 86400;
+	hour_to_s = hour * 60;
+	long tmp = years_to_s + month_to_s + day_to_s + hour_to_s + s;
+	return (tmp);
+}
+
 static void	write_type(t_env *e, struct stat *buf)
 {
 	ft_memset(e->data[e->nb_files].output, ' ', 4092);
@@ -32,7 +47,7 @@ static void	write_type(t_env *e, struct stat *buf)
 
 int			write_mod(t_env *e, struct stat *buf, char *path)
 {
-	// char	namebuf[MAX_FSIZE];
+	char	namebuf[MAX_FSIZE];
 
 	(void)path;
 	write_type(e, buf);
@@ -54,17 +69,27 @@ int			write_mod(t_env *e, struct stat *buf, char *path)
 		e->data[e->nb_files].output[8] = 'w';
 	if (buf->st_mode & S_IXOTH)
 		e->data[e->nb_files].output[9] = 'x';
-	// if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
-	// 	e->data[e->nb_files].output[10] = '@';
+	if (listxattr(path, namebuf, MAX_FSIZE, XATTR_NOFOLLOW) > 0)
+		e->data[e->nb_files].output[10] = '@';
 	return (10);
 }
 
 int		write_details(t_env *e, int i, int ret)
 {
-	char 	*time;
-	int		tmp;
+	char 		*date_str;
+	long		time_secondes;
+	int			tmp;
+	time_t 		today;
+    struct tm	tm;
 
-	time = ctime((time_t *)&e->data[i].time);
+	today = time(NULL);
+	// tm = *localtime(&today);
+	tm = *localtime((time_t *)&e->data[i].time);
+	date_str = ctime((time_t *)&e->data[i].time);
+	time_secondes = convert_data_to_second(tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
+						tm.tm_hour, tm.tm_min * 60 + tm.tm_sec);
+	ft_printf("Time: %d-%02d-%02d %02d:%02d:%02d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+	ft_printf("time_toSeconds: %ld\n", time_secondes);
 	ret += e->max_width.l - e->data[i].width.l + SPE;
 	ret += ft_sprintf(&e->data[i].output[ret], "%d", e->data[i].nb_link);
 	e->data[i].output[ret++] = ' ';
@@ -74,11 +99,11 @@ int		write_details(t_env *e, int i, int ret)
 	ret += e->max_width.gn + SPE;
 	ret += e->max_width.s - e->data[i].width.s;
 	ret += ft_sprintf(&e->data[i].output[ret], "%u ", e->data[i].st_size);
-	ret += ft_sprintf(&e->data[i].output[ret], "%.7s", &time[4]);
-	if ((tmp = ft_atoi(&time[20])) != CURRENT_YEAR) 						// >> less then 6 month
+	ret += ft_sprintf(&e->data[i].output[ret], "%.7s", &date_str[4]);
+	if ((tmp = ft_atoi(&date_str[20])) != CURRENT_YEAR) 						// >> less then 6 month
 		ret += ft_sprintf(&e->data[i].output[ret], " %d ", tmp);
 	else
-		ret += ft_sprintf(&e->data[i].output[ret], "%.5s ", &time[11]);
+		ret += ft_sprintf(&e->data[i].output[ret], "%.5s ", &date_str[11]);
 	return (ret);
 }
 

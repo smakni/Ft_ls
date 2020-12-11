@@ -4,6 +4,8 @@
 		"stat.h": "c",
 		"dir.h": "c",
 		"dirent.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"chrono": "cpp",
+		"ctime": "cpp"
 	}
 }

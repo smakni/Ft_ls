@@ -31,8 +31,8 @@ void		option(char *av, char *opt)
 			*opt |= 32;
 		else
 		{
-			ft_printf("/bin/ls: illegal option -- %c\n", *av);
-			ft_printf("usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
+			ft_printf("ls: illegal option -- %c\n", *av);
+			ft_printf("usage: ls [-@ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1%%] [file ...]");
 			exit (1);
 		}
 		av++;

@@ -23,6 +23,7 @@
 # include <pwd.h>
 # include <grp.h>
 # include <uuid/uuid.h>
+# include <time.h>
 
 # if __APPLE__
 #    define MAX_FSIZE    1024
